@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/blog/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          mvvm原理 - 徐翔的blog
+        
+    </title>
+
+    <link rel="canonical" href="git@github.com:276378532/blog.git/blog/article/mvvm原理/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/blog/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/blog/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/blog/css/highlight.css">
+
+    <link rel="stylesheet" href="/blog/css/widget.css">
+
+    <link rel="stylesheet" href="/blog/css/rocket.css">
+
+    <link rel="stylesheet" href="/blog/css/signature.css">
+
+    <link rel="stylesheet" href="/blog/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/blog/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/blog/tags/#vue" title="vue">vue</a>
+                            
+                        </div>
+                        <h1>mvvm原理</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 徐翔 on
+                            2019-08-18
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/blog/">徐翔</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/blog/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/blog/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/blog/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/blog/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="发展">发展</h2>
+<blockquote>
+<p>MVVM 双向数据绑定 在Angular1.x版本的时候通过的是脏值检测来处理<br>
+而现在无论是React还是Vue还是最新的Angular，其实实现方式都更相近了<br>
+那就是通过数据劫持+发布订阅模式<br>
+真正实现其实靠的也是ES5中提供的Object.defineProperty，当然这是不兼容的所以Vue等只支持了IE8+</p>
+</blockquote>
+<h3 id="为什么是它">为什么是它</h3>
+<p>Object.defineProperty()说实在的我们大家在开发中确实用的不多，多数是修改内部特性，不过就是定义对象上的属性和值么？干嘛搞的这么费劲(纯属个人想法)</p>
+<p>But在实现框架or库的时候却发挥了大用场了，这个就不多说了，只不过轻舟一片而已，还没到写库的实力</p>
+<p><strong>知其然要知其所以然，来看看如何使用</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;&#125;;</span><br><span class="line"><span class="keyword">let</span> song = <span class="string">'发如雪'</span>;</span><br><span class="line">obj.singer = <span class="string">'周杰伦'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">'music'</span>, &#123;</span><br><span class="line">    <span class="comment">// 1. value: '七里香',</span></span><br><span class="line">    configurable: <span class="literal">true</span>,     <span class="comment">// 2. 可以配置对象，删除属性</span></span><br><span class="line">    <span class="comment">// writable: true,         // 3. 可以修改对象</span></span><br><span class="line">    enumerable: <span class="literal">true</span>,        <span class="comment">// 4. 可以枚举</span></span><br><span class="line">    <span class="comment">// ☆ get,set设置时不能设置writable和value，它们代替了二者且是互斥的</span></span><br><span class="line">    get() &#123;     <span class="comment">// 5. 获取obj.music的时候就会调用get方法</span></span><br><span class="line">        <span class="keyword">return</span> song;</span><br><span class="line">    &#125;,</span><br><span class="line">    set(val) &#123;      <span class="comment">// 6. 将修改的值重新赋给song</span></span><br><span class="line">        song = val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 下面打印的部分分别是对应代码写入顺序执行</span></span><br><span class="line"><span class="built_in">console</span>.log(obj);   <span class="comment">// &#123;singer: '周杰伦'&#125;  // 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> obj.music;   <span class="comment">// 如果想对obj里的属性进行删除，configurable要设为true  2</span></span><br><span class="line"><span class="built_in">console</span>.log(obj);   <span class="comment">// 此时为  &#123;singer: '周杰伦'&#125;</span></span><br><span class="line"></span><br><span class="line">obj.music = <span class="string">'听妈妈的话'</span>;   <span class="comment">// 如果想对obj的属性进行修改，writable要设为true  3</span></span><br><span class="line"><span class="built_in">console</span>.log(obj);   <span class="comment">// &#123;singer: '周杰伦', music: "听妈妈的话"&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">    <span class="comment">// 默认情况下通过defineProperty定义的属性是不能被枚举(遍历)的</span></span><br><span class="line">    <span class="comment">// 需要设置enumerable为true才可以</span></span><br><span class="line">    <span class="comment">// 不然你是拿不到music这个属性的，你只能拿到singer</span></span><br><span class="line">    <span class="built_in">console</span>.log(key);   <span class="comment">// singer, music    4</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(obj.music);   <span class="comment">// '发如雪'  5</span></span><br><span class="line">obj.music = <span class="string">'夜曲'</span>;       <span class="comment">// 调用set设置新的值</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.music);   <span class="comment">// '夜曲'    6</span></span><br></pre></td></tr></table></figure>
+<p>以上是关于Object.defineProperty的用法</p>
+<p>下面我们来写个实例看看，这里我们以Vue为参照去实现怎么写MVVM</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// index.html</span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123; &#123;song&#125; &#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>《&#123; &#123;album.name&#125; &#125;》是&#123; &#123;singer&#125; &#125;2005年11月发行的专辑<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>主打歌为&#123; &#123;album.theme&#125; &#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>作词人为&#123; &#123;singer&#125; &#125;等人。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        为你弹奏肖邦的&#123; &#123;album.theme&#125; &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--实现的mvvm--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"mvvm.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="comment">// 写法和Vue一样</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> mvvm = <span class="keyword">new</span> Mvvm(&#123;</span></span><br><span class="line"><span class="javascript">            el: <span class="string">'#app'</span>,</span></span><br><span class="line"><span class="javascript">            data: &#123;     <span class="comment">// Object.defineProperty(obj, 'song', '发如雪');</span></span></span><br><span class="line"><span class="javascript">                song: <span class="string">'发如雪'</span>,</span></span><br><span class="line"><span class="undefined">                album: &#123;</span></span><br><span class="line"><span class="javascript">                    name: <span class="string">'十一月的萧邦'</span>,</span></span><br><span class="line"><span class="javascript">                    theme: <span class="string">'夜曲'</span></span></span><br><span class="line"><span class="undefined">                &#125;,</span></span><br><span class="line"><span class="javascript">                singer: <span class="string">'周杰伦'</span></span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;);</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上面是html里的写法，相信用过Vue的同学并不陌生</p>
+<p>那么现在就开始实现一个自己的MVVM吧</p>
+<h2 id="打造mvvm">打造MVVM</h2>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个Mvvm构造函数</span></span><br><span class="line"><span class="comment">// 这里用es6方法将options赋一个初始值，防止没传，等同于options || &#123;&#125;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Mvvm</span>(<span class="params">options = &#123;&#125;</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// vm.$options Vue上是将所有属性挂载到上面</span></span><br><span class="line">    <span class="comment">// 所以我们也同样实现,将所有属性挂载到了$options</span></span><br><span class="line">    <span class="keyword">this</span>.$options = options;</span><br><span class="line">    <span class="comment">// this._data 这里也和Vue一样</span></span><br><span class="line">    <span class="keyword">let</span> data = <span class="keyword">this</span>._data = <span class="keyword">this</span>.$options.data;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 数据劫持</span></span><br><span class="line">    observe(data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="数据劫持">数据劫持</h3>
+<p>为什么要做数据劫持？</p>
+<ul>
+<li>观察对象，给对象增加Object.defineProperty</li>
+<li>vue特点是不能新增不存在的属性 不存在的属性没有get和set</li>
+<li>深度响应 因为每次赋予一个新对象时会给这个新对象增加defineProperty(数据劫持)</li>
+</ul>
+<p>多说无益，一起看代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个Observe构造函数</span></span><br><span class="line"><span class="comment">// 写数据劫持的主要逻辑</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Observe</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 所谓数据劫持就是给对象增加get,set</span></span><br><span class="line">    <span class="comment">// 先遍历一遍对象再说</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> data) &#123;     <span class="comment">// 把data属性通过defineProperty的方式定义属性</span></span><br><span class="line">        <span class="keyword">let</span> val = data[key];</span><br><span class="line">        observe(val);   <span class="comment">// 递归继续向下找，实现深度的数据劫持</span></span><br><span class="line">        <span class="built_in">Object</span>.defineProperty(data, key, &#123;</span><br><span class="line">            configurable: <span class="literal">true</span>,</span><br><span class="line">            get() &#123;</span><br><span class="line">                <span class="keyword">return</span> val;</span><br><span class="line">            &#125;,</span><br><span class="line">            set(newVal) &#123;   <span class="comment">// 更改值的时候</span></span><br><span class="line">                <span class="keyword">if</span> (val === newVal) &#123;   <span class="comment">// 设置的值和以前值一样就不理它</span></span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                val = newVal;   <span class="comment">// 如果以后再获取值(get)的时候，将刚才设置的值再返回去</span></span><br><span class="line">                observe(newVal);    <span class="comment">// 当设置为新值后，也需要把新值再去定义成属性</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 外面再写一个函数</span></span><br><span class="line"><span class="comment">// 不用每次调用都写个new</span></span><br><span class="line"><span class="comment">// 也方便递归调用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">observe</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 如果不是对象的话就直接return掉</span></span><br><span class="line">    <span class="comment">// 防止递归溢出</span></span><br><span class="line">    <span class="keyword">if</span> (!data || <span class="keyword">typeof</span> data !== <span class="string">'object'</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Observe(data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上代码就实现了数据劫持，不过可能也有些疑惑的地方比如：递归</p>
+<p>再来细说一下为什么递归吧，看这个栗子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> mvvm = <span class="keyword">new</span> Mvvm(&#123;</span><br><span class="line">       el: <span class="string">'#app'</span>,</span><br><span class="line">       data: &#123;</span><br><span class="line">           a: &#123;</span><br><span class="line">               b: <span class="number">1</span></span><br><span class="line">           &#125;,</span><br><span class="line">           c: <span class="number">2</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+<p>我们在控制台里看下</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/3/31/162797a1132d2905?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>被标记的地方就是通过<strong>递归</strong>observe(val)进行数据劫持添加上了<strong>get</strong>和<strong>set</strong>，递归继续向a里面的对象去定义属性，亲测通过可放心食用</p>
+<p>接下来说一下observe(newVal)这里为什么也要递归</p>
+<p>还是在可爱的控制台上，敲下这么一段代码 mvvm._data.a = {b:‘ok’}</p>
+<p>然后继续看图说话</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/3/31/1627983927aca52a?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>通过observe(newVal)加上了</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/3/31/1627983e0e528729?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>现在大致明白了为什么要对设置的新值也进行递归observe了吧，哈哈，so easy</p>
+<p>数据劫持已完成，我们再做个数据代理</p>
+<h3 id="数据代理">数据代理</h3>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">数据代理就是让我们每次拿data里的数据时，不用每次都写一长串，如mvvm._data.a.b这种，我们其实可以直接写成mvvm.a.b这种显而易见的方式</span><br><span class="line"></span><br><span class="line">下面继续看下去，+号表示实现部分</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Mvvm</span>(<span class="params">options = &#123;&#125;</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 数据劫持</span></span><br><span class="line">    observe(data);</span><br><span class="line">    <span class="comment">// this 代理了this._data</span></span><br><span class="line">+   <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> data) &#123;</span><br><span class="line">        <span class="built_in">Object</span>.defineProperty(<span class="keyword">this</span>, key, &#123;</span><br><span class="line">            configurable: <span class="literal">true</span>,</span><br><span class="line">            get() &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>._data[key];     <span class="comment">// 如this.a = &#123;b: 1&#125;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            set(newVal) &#123;</span><br><span class="line">                <span class="keyword">this</span>._data[key] = newVal;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">+   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 此时就可以简化写法了</span></span><br><span class="line"><span class="built_in">console</span>.log(mvvm.a.b);   <span class="comment">// 1</span></span><br><span class="line">mvvm.a.b = <span class="string">'ok'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(mvvm.a.b);  <span class="comment">// 'ok'</span></span><br></pre></td></tr></table></figure>
+<p>写到这里数据劫持和数据代理都实现了，那么接下来就需要编译一下了，把</p>
+<p>里面的内容解析出来</p>
+<h3 id="数据编译">数据编译</h3>
+<p>function Mvvm(options = {}) {<br>
+// observe(data);<br>
+// 编译</p>
+<ul>
+<li>new Compile(options.el, this);<br>
+}</li>
+</ul>
+<p>// 创建Compile构造函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Compile</span>(<span class="params">el, vm</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 将el挂载到实例上方便调用</span></span><br><span class="line">    vm.$el = <span class="built_in">document</span>.querySelector(el);</span><br><span class="line">    <span class="comment">// 在el范围里将内容都拿到，当然不能一个一个的拿</span></span><br><span class="line">    <span class="comment">// 可以选择移到内存中去然后放入文档碎片中，节省开销</span></span><br><span class="line">    <span class="keyword">let</span> fragment = <span class="built_in">document</span>.createDocumentFragment();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (child = vm.$el.firstChild) &#123;</span><br><span class="line">        fragment.appendChild(child);    <span class="comment">// 此时将el中的内容放入内存中</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 对el里面的内容进行替换</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">replace</span>(<span class="params">frag</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">Array</span>.from(frag.childNodes).forEach(<span class="function"><span class="params">node</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> txt = node.textContent;</span><br><span class="line">            <span class="keyword">let</span> reg = <span class="regexp">/\&#123;\&#123;(.*?)\&#125;\&#125;/g</span>;   <span class="comment">// 正则匹配&#123; &#123; &#125; &#125;</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (node.nodeType === <span class="number">3</span> &amp;&amp; reg.test(txt)) &#123; <span class="comment">// 即是文本节点又有大括号的情况&#123; &#123; &#125; &#125;</span></span><br><span class="line">                <span class="built_in">console</span>.log(<span class="built_in">RegExp</span>.$<span class="number">1</span>); <span class="comment">// 匹配到的第一个分组 如： a.b, c</span></span><br><span class="line">                <span class="keyword">let</span> arr = <span class="built_in">RegExp</span>.$<span class="number">1.</span>split(<span class="string">'.'</span>);</span><br><span class="line">                <span class="keyword">let</span> val = vm;</span><br><span class="line">                arr.forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">                    val = val[key];     <span class="comment">// 如this.a.b</span></span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="comment">// 用trim方法去除一下首尾空格</span></span><br><span class="line">                node.textContent = txt.replace(reg, val).trim();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 如果还有子节点，继续递归replace</span></span><br><span class="line">            <span class="keyword">if</span> (node.childNodes &amp;&amp; node.childNodes.length) &#123;</span><br><span class="line">                replace(node);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    replace(fragment);  <span class="comment">// 替换内容</span></span><br><span class="line"></span><br><span class="line">    vm.$el.appendChild(fragment);   <span class="comment">// 再将文档碎片放入el中</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看到这里在面试中已经可以初露锋芒了，那就一鼓作气，做事做全套，来个一条龙</p>
+<p>现在数据已经可以编译了，但是我们手动修改后的数据并没有在页面上发生改变</p>
+<p>下面我们就来看看怎么处理，其实这里就用到了特别常见的设计模式，发布订阅模式</p>
+<h3 id="发布订阅">发布订阅</h3>
+<p>发布订阅主要靠的就是数组关系，订阅就是放入函数，发布就是让数组里的函数执行</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发布订阅模式  订阅和发布 如[fn1, fn2, fn3]</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dep</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 一个数组(存放函数的事件池)</span></span><br><span class="line">    <span class="keyword">this</span>.subs = [];</span><br><span class="line">&#125;</span><br><span class="line">Dep.prototype = &#123;</span><br><span class="line">    addSub(sub) &#123;</span><br><span class="line">        <span class="keyword">this</span>.subs.push(sub);</span><br><span class="line">    &#125;,</span><br><span class="line">    notify() &#123;</span><br><span class="line">        <span class="comment">// 绑定的方法，都有一个update方法</span></span><br><span class="line">        <span class="keyword">this</span>.subs.forEach(<span class="function"><span class="params">sub</span> =&gt;</span> sub.update());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 监听函数</span></span><br><span class="line"><span class="comment">// 通过Watcher这个类创建的实例，都拥有update方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Watcher</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.fn = fn;   <span class="comment">// 将fn放到实例上</span></span><br><span class="line">&#125;</span><br><span class="line">Watcher.prototype.update = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.fn();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> watcher = <span class="keyword">new</span> Watcher(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">111</span>));</span><br><span class="line"><span class="keyword">let</span> dep = <span class="keyword">new</span> Dep();</span><br><span class="line">dep.addSub(watcher);    <span class="comment">// 将watcher放到数组中,watcher自带update方法， =&gt; [watcher]</span></span><br><span class="line">dep.addSub(watcher);</span><br><span class="line">dep.notify();   <span class="comment">//  111, 111</span></span><br></pre></td></tr></table></figure>
+<h3 id="数据更新视图">数据更新视图</h3>
+<ul>
+<li>现在我们要订阅一个事件，当数据改变需要重新刷新视图，这就需要在replace替换的逻辑里来处理</li>
+<li>通过new Watcher把数据订阅一下，数据一变就执行改变内容的操作</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">replace</span>(<span class="params">frag</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 省略...</span></span><br><span class="line">    <span class="comment">// 替换的逻辑</span></span><br><span class="line">    node.textContent = txt.replace(reg, val).trim();</span><br><span class="line">    <span class="comment">// 监听变化</span></span><br><span class="line">    <span class="comment">// 给Watcher再添加两个参数，用来取新的值(newVal)给回调函数传参</span></span><br><span class="line">+   <span class="keyword">new</span> Watcher(vm, <span class="built_in">RegExp</span>.$<span class="number">1</span>, newVal =&gt; &#123;</span><br><span class="line">        node.textContent = txt.replace(reg, newVal).trim();</span><br><span class="line">+   &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 重写Watcher构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Watcher</span>(<span class="params">vm, exp, fn</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.fn = fn;</span><br><span class="line">+   <span class="keyword">this</span>.vm = vm;</span><br><span class="line">+   <span class="keyword">this</span>.exp = exp;</span><br><span class="line">    <span class="comment">// 添加一个事件</span></span><br><span class="line">    <span class="comment">// 这里我们先定义一个属性</span></span><br><span class="line">+   Dep.target = <span class="keyword">this</span>;</span><br><span class="line">+   <span class="keyword">let</span> arr = exp.split(<span class="string">'.'</span>);</span><br><span class="line">+   <span class="keyword">let</span> val = vm;</span><br><span class="line">+   arr.forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;    <span class="comment">// 取值</span></span><br><span class="line">+      val = val[key];     <span class="comment">// 获取到this.a.b，默认就会调用get方法</span></span><br><span class="line">+   &#125;);</span><br><span class="line">+   Dep.target = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当获取值的时候就会自动调用get方法，于是我们去找一下数据劫持那里的get方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Observe</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">+   <span class="keyword">let</span> dep = <span class="keyword">new</span> Dep();</span><br><span class="line">    <span class="comment">// 省略...</span></span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(data, key, &#123;</span><br><span class="line">        get() &#123;</span><br><span class="line">+           Dep.target &amp;&amp; dep.addSub(Dep.target);   <span class="comment">// 将watcher添加到订阅事件中 [watcher]</span></span><br><span class="line">            <span class="keyword">return</span> val;</span><br><span class="line">        &#125;,</span><br><span class="line">        set(newVal) &#123;</span><br><span class="line">            <span class="keyword">if</span> (val === newVal) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            val = newVal;</span><br><span class="line">            observe(newVal);</span><br><span class="line">+           dep.notify();   <span class="comment">// 让所有watcher的update方法执行即可</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当set修改值的时候执行了dep.notify方法，这个方法是执行watcher的update方法，那么我们再对update进行修改一下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Watcher.prototype.update = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// notify的时候值已经更改了</span></span><br><span class="line">    <span class="comment">// 再通过vm, exp来获取新的值</span></span><br><span class="line">+   <span class="keyword">let</span> arr = <span class="keyword">this</span>.exp.split(<span class="string">'.'</span>);</span><br><span class="line">+   <span class="keyword">let</span> val = <span class="keyword">this</span>.vm;</span><br><span class="line">+   arr.forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">+       val = val[key];   <span class="comment">// 通过get获取到新的值</span></span><br><span class="line">+   &#125;);</span><br><span class="line">    <span class="keyword">this</span>.fn(val);   <span class="comment">// 将每次拿到的新值去替换&#123;&#123;&#125;&#125;的内容即可</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="双向数据绑定">双向数据绑定</h3>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">// html结构</span></span><br><span class="line">    &lt;input v-model=<span class="string">"c"</span> type=<span class="string">"text"</span>&gt;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 数据部分</span></span><br><span class="line">    data: &#123;</span><br><span class="line">        a: &#123;</span><br><span class="line">            b: <span class="number">1</span></span><br><span class="line">        &#125;,</span><br><span class="line">        c: <span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">replace</span>(<span class="params">frag</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 省略...</span></span><br><span class="line">+       <span class="keyword">if</span> (node.nodeType === <span class="number">1</span>) &#123;  <span class="comment">// 元素节点</span></span><br><span class="line">            <span class="keyword">let</span> nodeAttr = node.attributes; <span class="comment">// 获取dom上的所有属性,是个类数组</span></span><br><span class="line">            <span class="built_in">Array</span>.from(nodeAttr).forEach(<span class="function"><span class="params">attr</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> name = attr.name;   <span class="comment">// v-model  type</span></span><br><span class="line">                <span class="keyword">let</span> exp = attr.value;   <span class="comment">// c        text</span></span><br><span class="line">                <span class="keyword">if</span> (name.includes(<span class="string">'v-'</span>))&#123;</span><br><span class="line">                    node.value = vm[exp];   <span class="comment">// this.c 为 2</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 监听变化</span></span><br><span class="line">                <span class="keyword">new</span> Watcher(vm, exp, <span class="function"><span class="keyword">function</span>(<span class="params">newVal</span>) </span>&#123;</span><br><span class="line">                    node.value = newVal;   <span class="comment">// 当watcher触发时会自动将内容放进输入框中</span></span><br><span class="line">                &#125;);</span><br><span class="line">                node.addEventListener(<span class="string">'input'</span>, e =&gt; &#123;</span><br><span class="line">                    <span class="keyword">let</span> newVal = e.target.value;</span><br><span class="line">                    <span class="comment">// 相当于给this.c赋了一个新值</span></span><br><span class="line">                    <span class="comment">// 而值的改变会调用set，set中又会调用notify，notify中调用watcher的update方法实现了更新</span></span><br><span class="line">                    vm[exp] = newVal;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">+       &#125;</span><br><span class="line">        <span class="keyword">if</span> (node.childNodes &amp;&amp; node.childNodes.length) &#123;</span><br><span class="line">            replace(node);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>大功告成，面试问Vue的东西不过就是这个罢了，什么双向数据绑定怎么实现的，问的一点心意都没有，差评！！！</p>
+<p><strong>大官人请留步</strong>，本来应该收手了，可临时起意(手痒)，再写点功能吧，再加个computed(计算属性)和mounted(钩子函数)吧</p>
+<h3 id="computed计算属性-ampamp-mounted钩子函数">computed(计算属性) &amp;&amp; mounted(钩子函数)</h3>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// html结构</span></span><br><span class="line">    &lt;p&gt;求和的值是&#123;&#123;sum&#125;&#125;&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">    data: &#123; a: 1, b: 9 &#125;,</span></span><br><span class="line"><span class="regexp">    computed: &#123;</span></span><br><span class="line"><span class="regexp">        sum() &#123;</span></span><br><span class="line"><span class="regexp">            return this.a + this.b;</span></span><br><span class="line"><span class="regexp">        &#125;,</span></span><br><span class="line"><span class="regexp">        noop() &#123;&#125;</span></span><br><span class="line"><span class="regexp">    &#125;,</span></span><br><span class="line"><span class="regexp">    mounted() &#123;</span></span><br><span class="line"><span class="regexp">        setTimeout(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">            console.log('所有事情都搞定了');</span></span><br><span class="line"><span class="regexp">        &#125;, 1000);</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">    function Mvvm(options = &#123;&#125;) &#123;</span></span><br><span class="line"><span class="regexp">        /</span><span class="regexp">/ 初始化computed,将this指向实例</span></span><br><span class="line"><span class="regexp">+       initComputed.call(this);</span></span><br><span class="line"><span class="regexp">        /</span><span class="regexp">/ 编译</span></span><br><span class="line"><span class="regexp">        new Compile(options.el, this);</span></span><br><span class="line"><span class="regexp">        /</span><span class="regexp">/ 所有事情处理好后执行mounted钩子函数</span></span><br><span class="line"><span class="regexp">+       options.mounted.call(this); /</span><span class="regexp">/ 这就实现了mounted钩子函数</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">    function initComputed() &#123;</span></span><br><span class="line"><span class="regexp">        let vm = this;</span></span><br><span class="line"><span class="regexp">        let computed = this.$options.computed;  /</span><span class="regexp">/ 从options上拿到computed属性   &#123;sum: ƒ, noop: ƒ&#125;</span></span><br><span class="line"><span class="regexp">        /</span><span class="regexp">/ 得到的都是对象的key可以通过Object.keys转化为数组</span></span><br><span class="line"><span class="regexp">        Object.keys(computed).forEach(key =&gt; &#123;  /</span><span class="regexp">/ key就是sum,noop</span></span><br><span class="line"><span class="regexp">            Object.defineProperty(vm, key, &#123;</span></span><br><span class="line"><span class="regexp">                /</span><span class="regexp">/ 这里判断是computed里的key是对象还是函数</span></span><br><span class="line"><span class="regexp">                /</span><span class="regexp">/ 如果是函数直接就会调get方法</span></span><br><span class="line"><span class="regexp">                /</span><span class="regexp">/ 如果是对象的话，手动调一下get方法即可</span></span><br><span class="line"><span class="regexp">                /</span><span class="regexp">/ 如： sum() &#123;return this.a + this.b;&#125;,他们获取a和b的值就会调用get方法</span></span><br><span class="line"><span class="regexp">                /</span><span class="regexp">/ 所以不需要new Watcher去监听变化了</span></span><br><span class="line"><span class="regexp">                get: typeof computed[key] === 'function' ? computed[key] : computed[key].get,</span></span><br><span class="line"><span class="regexp">                set() &#123;&#125;</span></span><br><span class="line"><span class="regexp">            &#125;);</span></span><br><span class="line"><span class="regexp">        &#125;);</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="总结">总结</h2>
+<p>通过自己实现的mvvm一共包含了以下东西</p>
+<ul>
+<li>通过Object.defineProperty的get和set进行数据劫持</li>
+<li>通过遍历data数据进行数据代理到this上</li>
+<li>通过{{ }}对数据进行编译</li>
+<li>通过发布订阅模式实现数据与视图同步</li>
+<li>通过通过通过，收了，感谢大官人的留步了</li>
+</ul>
+<h2 id="补充">补充</h2>
+<p>针对以上代码在实现编译的时候还是会有一些小bug，再次经过研究和高人指点，完善了编译，下面请看修改后的代码</p>
+<p><strong>修复</strong>：两个相邻的{{ }}正则匹配，后一个不能正确编译成对应的文本，如{{album.name}} {{singer}}</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Compile</span>(<span class="params">el, vm</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 省略...</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">replace</span>(<span class="params">frag</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 省略...</span></span><br><span class="line">        <span class="keyword">if</span> (node.nodeType === <span class="number">3</span> &amp;&amp; reg.test(txt)) &#123;</span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">replaceTxt</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                node.textContent = txt.replace(reg, (matched, placeholder) =&gt; &#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(placeholder);   <span class="comment">// 匹配到的分组 如：song, album.name, singer...</span></span><br><span class="line">                    <span class="keyword">new</span> Watcher(vm, placeholder, replaceTxt);   <span class="comment">// 监听变化，进行匹配替换内容</span></span><br><span class="line"></span><br><span class="line">                    <span class="keyword">return</span> placeholder.split(<span class="string">'.'</span>).reduce(<span class="function">(<span class="params">val, key</span>) =&gt;</span> &#123;</span><br><span class="line">                        <span class="keyword">return</span> val[key];</span><br><span class="line">                    &#125;, vm);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="comment">// 替换</span></span><br><span class="line">            replaceTxt();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码主要实现依赖的是reduce方法，reduce 为数组中的每一个元素依次执行回调函数</p>
+<p>如果还有不太清楚的，那我们单独抽出来reduce这部分再看一下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将匹配到的每一个值都进行split分割</span></span><br><span class="line"><span class="comment">// 如:'song'.split('.') =&gt; ['song'] =&gt; ['song'].reduce((val, key) =&gt; val[key]) </span></span><br><span class="line"><span class="comment">// 其实就是将vm传给val做初始值，reduce执行一次回调返回一个值</span></span><br><span class="line"><span class="comment">// vm['song'] =&gt; '周杰伦'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 上面不够深入，我们再来看一个</span></span><br><span class="line"><span class="comment">// 再如：'album.name'.split('.') =&gt; ['album', 'name'] =&gt; ['album', 'name'].reduce((val, key) =&gt; val[key])</span></span><br><span class="line"><span class="comment">// 这里vm还是做为初始值传给val，进行第一次调用，返回的是vm['album']</span></span><br><span class="line"><span class="comment">// 然后将返回的vm['album']这个对象传给下一次调用的val</span></span><br><span class="line"><span class="comment">// 最后就变成了vm['album']['name'] =&gt; '十一月的萧邦'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> placeholder.split(<span class="string">'.'</span>).reduce(<span class="function">(<span class="params">val, key</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> val[key];</span><br><span class="line">&#125;, vm);</span><br></pre></td></tr></table></figure>
+<p>reduce的用处多多，比如计算数组求和是比较普通的方法了，还有一种比较好用的妙处是可以进行二维数组的展平(flatten)，各位不妨来看最后一眼</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [</span><br><span class="line">  [<span class="number">1</span>, <span class="number">2</span>],</span><br><span class="line">  [<span class="number">3</span>, <span class="number">4</span>],</span><br><span class="line">  [<span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> flatten = arr.reduce(<span class="function">(<span class="params">previous, current</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> previous.concat(current);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(flatten); <span class="comment">// [1, 2, 3, 4, 5, 6]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ES6中也可以利用...展开运算符来实现的，实现思路一样，只是写法更精简了</span></span><br><span class="line">flatten = arr.reduce(<span class="function">(<span class="params">a, b</span>) =&gt;</span> [...a, ...b]);</span><br><span class="line"><span class="built_in">console</span>.log(flatten); <span class="comment">// [1, 2, 3, 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+<p>本文转自https://juejin.im/post/5abdd6f6f265da23793c4458</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/blog/article/offsetWidth、clientWidth和scrollWidth/" data-toggle="tooltip" data-placement="top" title="offsetWidth、clientWidth和scrollWidth">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#发展"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x53D1;&#x5C55;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#为什么是它"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x4E3A;&#x4EC0;&#x4E48;&#x662F;&#x5B83;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#打造mvvm"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x6253;&#x9020;MVVM</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#数据劫持"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x6570;&#x636E;&#x52AB;&#x6301;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#数据代理"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">&#x6570;&#x636E;&#x4EE3;&#x7406;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#数据编译"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">&#x6570;&#x636E;&#x7F16;&#x8BD1;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#发布订阅"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">&#x53D1;&#x5E03;&#x8BA2;&#x9605;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#数据更新视图"><span class="toc-nav-number">2.5.</span> <span class="toc-nav-text">&#x6570;&#x636E;&#x66F4;&#x65B0;&#x89C6;&#x56FE;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#双向数据绑定"><span class="toc-nav-number">2.6.</span> <span class="toc-nav-text">&#x53CC;&#x5411;&#x6570;&#x636E;&#x7ED1;&#x5B9A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#computed计算属性-ampamp-mounted钩子函数"><span class="toc-nav-number">2.7.</span> <span class="toc-nav-text">computed(&#x8BA1;&#x7B97;&#x5C5E;&#x6027;) &amp;&amp; mounted(&#x94A9;&#x5B50;&#x51FD;&#x6570;)</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#总结"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x603B;&#x7ED3;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#补充"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x8865;&#x5145;</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/blog/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/blog/tags/#vue" title="vue">vue</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://zuoning327.com" target="_blank">左宁の博客</a></li>
+                    
+                        <li><a href="http://www.decadefarewell.top" target="_blank">浪子回头</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/blog/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/276378532">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 徐翔 2019 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="">徐翔</a>
+                    <!-- <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huweihuang&repo=hexo-theme-huweihuang&type=star&count=true" >
+                    </iframe> -->
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/blog/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/blog/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/blog/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("git@github.com:276378532/blog.git/blog/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/blog/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/blog/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="git@github.com:276378532/blog.git/blog/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

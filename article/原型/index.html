@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          随记 - 徐翔的blog
+          原型 - 徐翔的blog
         
     </title>
 
-    <link rel="canonical" href="git@github.com:276378532/blog.git/blog/article/随记/">
+    <link rel="canonical" href="git@github.com:276378532/blog.git/blog/article/原型/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/blog/tags/#随记" title="随记">随记</a>
+                              <a class="tag" href="/blog/tags/#js" title="js">js</a>
                             
                         </div>
-                        <h1>随记</h1>
+                        <h1>原型</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 徐翔 on
-                            2019-02-26
+                            2019-03-10
                         </span>
                     </div>
                 
@@ -212,12 +212,86 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="折腾半天终于弄好了">折腾半天，终于弄好了</h2>
-<p>仅此纪念</p>
+                <h1 id="原型">原型</h1>
 <blockquote>
-<p>不积跬步无以至千里<br>
-长路漫漫 只能慢慢来了</p>
+<p>先看下面的图</p>
 </blockquote>
+<p><img src="https://camo.githubusercontent.com/8c32afe801835586c6ee59ef570fe2b322eadd6e/68747470733a2f2f79636b2d313235343236333432322e636f732e61702d7368616e676861692e6d7971636c6f75642e636f6d2f626c6f672f323031392d30362d30312d3033333932352e706e67" alt=""></p>
+<blockquote>
+<p>每个函数都有 prototype 属性，除了 Function.prototype.bind()，该属性指向原型。</p>
+</blockquote>
+<blockquote>
+<p>每个对象都有 __proto__ 属性，指向了创建该对象的构造函数的原型。其实这个属性指向了 [[prototype]]，但是 [[prototype]] 是内部属性，我们并不能访问到，所以使用__proto__ 来访问。</p>
+</blockquote>
+<blockquote>
+<p>对象可以通过 __proto__ 来寻找不属于该对象的属性，__proto__ 将对象连接起来组成了原型链。</p>
+</blockquote>
+<h2 id="prototype">prototype</h2>
+<p>首先来介绍下 prototype 属性。这是一个显式原型属性，只有函数才拥有该属性。基本上所有函数都有这个属性，但是也有一个例外</p>
+<pre><code>let fun = Function.prototype.bind()
+</code></pre>
+<p>如果你以上述方法创建一个函数，那么可以发现这个函数是不具有 prototype 属性的。</p>
+<pre><code>prototype 如何产生的
+</code></pre>
+<p>当我们声明一个函数时，这个属性就被自动创建了。</p>
+<pre><code>function Foo() {}
+</code></pre>
+<p>并且这个属性的值是一个对象（也就是原型），只有一个属性 constructor<br>
+<img src="https://camo.githubusercontent.com/2085baaec37f9b795e8bfafc08f47939d60cc549/68747470733a2f2f79636b2d313235343236333432322e636f732e61702d7368616e676861692e6d7971636c6f75642e636f6d2f626c6f672f323031392d30362d30312d3033333932362e706e67" alt=""><br>
+constructor 对应着构造函数，也就是 Foo。</p>
+<h2 id="constructor">constructor</h2>
+<blockquote>
+<p>constructor 是一个公有且不可枚举的属性。一旦我们改变了函数的 prototype ，那么新对象就没有这个属性了（当然可以通过原型链取到 constructor）。</p>
+</blockquote>
+<p><img src="https://camo.githubusercontent.com/eb9f5a39c45aeb9352a6a8518a5e83be9f4d84a8/68747470733a2f2f79636b2d313235343236333432322e636f732e61702d7368616e676861692e6d7971636c6f75642e636f6d2f626c6f672f323031392d30362d30312d3033333932382e706e67" alt=""></p>
+<p>那么你肯定也有一个疑问，这个属性到底有什么用呢？其实这个属性可以说是一个历史遗留问题，在大部分情况下是没用的，在我的理解里，我认为他有两个作用：</p>
+<blockquote>
+<p>1.让实例对象知道是什么函数构造了它<br>
+2.如果想给某些类库中的构造函数增加一些自定义的方法，就可以通过 xx.constructor.method 来扩展</p>
+</blockquote>
+<h2 id="__proto__">__proto__</h2>
+<p>这是每个对象都有的隐式原型属性，指向了创建该对象的构造函数的原型。其实这个属性指向了 [[prototype]]，但是 [[prototype]] 是内部属性，我们并不能访问到，所以使用 __proto__ 来访问。</p>
+<p>因为在 JS 中是没有类的概念的，为了实现类似继承的方式，通过 <em>proto</em> 将对象和原型联系起来组成原型链，得以让对象可以访问到不属于自己的属性。</p>
+<h3 id="实例对象的__proto__如何产生的">实例对象的__proto__如何产生的</h3>
+<p>从上图可知，当我们使用 new 操作符时，生成的实例对象拥有了__proto__属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="comment">// 这个函数是 Function 的实例对象</span></span><br><span class="line"><span class="comment">// function 就是一个语法糖</span></span><br><span class="line"><span class="comment">// 内部调用了 new Function(...)</span></span><br></pre></td></tr></table></figure>
+<p>所以可以说，在 new 的过程中，新对象被添加了 <em>proto</em> 并且链接到构造函数的原型上。</p>
+<h3 id="new-的过程">new 的过程</h3>
+<ol>
+<li>新生成了一个对象</li>
+<li>链接到原型</li>
+<li>绑定 this</li>
+<li>返回新对象</li>
+</ol>
+<p>在调用 new 的过程中会发生以上四件事情，我们也可以试着来自己实现一个 new</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="comment">// 创建一个空的对象</span></span><br><span class="line"><span class="keyword">let</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line"><span class="comment">// 获得构造函数</span></span><br><span class="line"><span class="keyword">let</span> Con = [].shift.call(<span class="built_in">arguments</span>)</span><br><span class="line"><span class="comment">// 链接到原型</span></span><br><span class="line">obj.__proto__ = Con.prototype</span><br><span class="line"><span class="comment">// 绑定 this，执行构造函数</span></span><br><span class="line"><span class="keyword">let</span> result = Con.apply(obj, <span class="built_in">arguments</span>)</span><br><span class="line"><span class="comment">// 确保 new 出来的是个对象</span></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">typeof</span> result === <span class="string">'object'</span> ? result : obj</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于实例对象来说，都是通过 new 产生的，无论是 function Foo() 还是 let a = { b : 1 } 。</p>
+<p>对于创建一个对象来说，更推荐使用字面量的方式创建对象。因为你使用 new Object() 的方式创建对象需要通过作用域链一层层找到 Object，但是你使用字面量的方式就没这个问题。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="comment">// function 就是个语法糖</span></span><br><span class="line"><span class="comment">// 内部等同于 new Function()</span></span><br><span class="line"><span class="keyword">let</span> a = &#123; <span class="attr">b</span>: <span class="number">1</span> &#125;</span><br><span class="line"><span class="comment">// 这个字面量内部也是使用了 new Object()</span></span><br></pre></td></tr></table></figure>
+<h2 id="function__proto__-functionprototype">Function.__proto__ === Function.prototype</h2>
+<p>对于对象来说，<strong>xx.__proto__.contrcutor</strong> 是该对象的构造函数，但是在图中我们可以发现** Function.__proto__ === Function.prototype**，难道这代表着 Function 自己产生了自己?</p>
+<blockquote>
+<p>答案肯定是否认的，要说明这个问题我们先从 Object 说起。</p>
+</blockquote>
+<p>从图中我们可以发现，所有对象都可以通过原型链最终找到** Object.prototype** ，虽然 <strong>Object.prototype</strong> 也是一个对象，但是这个对象却不是 <strong>Object</strong> 创造的，而是引擎自己创建了 <strong>Object.prototype</strong> 。所以可以这样说，所有实例都是对象，但是对象不一定都是实例。</p>
+<p>接下来我们来看 <strong>Function.prototype</strong> 这个特殊的对象，如果你在浏览器将这个对象打印出来，会发现这个对象其实是一个函数。</p>
+<blockquote>
+<p>我们知道函数都是通过Function()生成的，难道Function.prototype 也是通过new Function()产生的吗？答案也是否定的，这个函数也是引擎自己创建的。首先引擎创建了 Object.prototype ，然后创建了 Function.prototype ，并且通过 __proto__ 将两者联系了起来。这里也很好的解释了上面的一个问题，为什么 let fun = Function.prototype.bind() 没有 prototype 属性。因为 Function.prototype 是引擎创建出来的对象，引擎认为不需要给这个对象添加 prototype 属性。</p>
+</blockquote>
+<h4 id="所以我们又可以得出一个结论不是所有函数都是-new-function-产生的">所以我们又可以得出一个结论，不是所有函数都是 new Function() 产生的。</h4>
+<blockquote>
+<p>有了 Function.prototype 以后才有了 function Function() ，然后其他的构造函数都是 function Function() 生成的。</p>
+</blockquote>
+<p>现在可以来解释 Function.__proto__ === Function.prototype 这个问题了。因为先有的 Function.prototype 以后才有的 function Function() ，所以也就不存在鸡生蛋蛋生鸡的悖论问题了。对于为什么 Function.__proto__ 会等于 Function.prototype ，个人的理解是：其他所有的构造函数都可以通过原型链找到 Function.prototype ，并且 function Function() 本质也是一个函数，为了不产生混乱就将 function Function() 的 __proto__ 联系到了 Function.prototype 上。</p>
+<h1 id="总结">总结</h1>
+<ol>
+<li>Object 是所有对象的爸爸，所有对象都可以通过 __proto__ 找到它</li>
+<li>Function 是所有函数的爸爸，所有函数都可以通过__proto__ 找到它</li>
+<li>Function.prototype 和 Object.prototype 是两个特殊的对象，他们由引擎来创建</li>
+<li>除了以上两个特殊对象，其他对象都是通过构造器 new 出来的</li>
+<li>函数的 prototype 是一个对象，也就是原型</li>
+<li>对象的__proto__ 指向原型， __proto__ 将对象和原型连接起来组成了原型链</li>
+</ol>
 
                 
 
@@ -226,9 +300,13 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/blog/article/js数据类型/" data-toggle="tooltip" data-placement="top" title="js数据类型">&larr; Previous Post</a>
+                            <a href="/blog/article/防抖和节流/" data-toggle="tooltip" data-placement="top" title="防抖和节流">&larr; Previous Post</a>
                         </li>
                     
+                    
+                        <li class="next">
+                            <a href="/blog/article/js数据类型/" data-toggle="tooltip" data-placement="top" title="js数据类型">Next Post &rarr;</a>
+                        </li>
                     
                 </ul>
 
@@ -283,7 +361,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#折腾半天终于弄好了"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x6298;&#x817E;&#x534A;&#x5929;&#xFF0C;&#x7EC8;&#x4E8E;&#x5F04;&#x597D;&#x4E86;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#原型"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x539F;&#x578B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#prototype"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">prototype</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#constructor"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">constructor</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#__proto__"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">__proto__</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#实例对象的__proto__如何产生的"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">&#x5B9E;&#x4F8B;&#x5BF9;&#x8C61;&#x7684;__proto__&#x5982;&#x4F55;&#x4EA7;&#x751F;&#x7684;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#new-的过程"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">new &#x7684;&#x8FC7;&#x7A0B;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#function__proto__-functionprototype"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">Function.__proto__ === Function.prototype</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#所以我们又可以得出一个结论不是所有函数都是-new-function-产生的"><span class="toc-nav-number">1.4.0.1.</span> <span class="toc-nav-text">&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53C8;&#x53EF;&#x4EE5;&#x5F97;&#x51FA;&#x4E00;&#x4E2A;&#x7ED3;&#x8BBA;&#xFF0C;&#x4E0D;&#x662F;&#x6240;&#x6709;&#x51FD;&#x6570;&#x90FD;&#x662F; new Function() &#x4EA7;&#x751F;&#x7684;&#x3002;</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#总结"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x603B;&#x7ED3;</span></a></li></ol>
         
         </div>
       </aside>
@@ -303,7 +381,7 @@
                     <h5><a href="/blog/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/blog/tags/#随记" title="随记">随记</a>
+                          <a class="tag" href="/blog/tags/#js" title="js">js</a>
                         
                     </div>
                 </section>

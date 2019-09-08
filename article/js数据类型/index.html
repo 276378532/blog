@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          随记 - 徐翔的blog
+          js数据类型 - 徐翔的blog
         
     </title>
 
-    <link rel="canonical" href="git@github.com:276378532/blog.git/blog/article/随记/">
+    <link rel="canonical" href="git@github.com:276378532/blog.git/blog/article/js数据类型/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/blog/tags/#随记" title="随记">随记</a>
+                              <a class="tag" href="/blog/tags/#js" title="js">js</a>
                             
                         </div>
-                        <h1>随记</h1>
+                        <h1>js数据类型</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 徐翔 on
-                            2019-02-26
+                            2019-03-03
                         </span>
                     </div>
                 
@@ -212,12 +212,54 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="折腾半天终于弄好了">折腾半天，终于弄好了</h2>
-<p>仅此纪念</p>
+                <h1 id="内置类型">内置类型</h1>
 <blockquote>
-<p>不积跬步无以至千里<br>
-长路漫漫 只能慢慢来了</p>
+<p>JS 中分为七种内置类型，七种内置类型又分为两大类型：基本类型和对象（Object）。<br>
+基本类型有六种： null，undefined，boolean，number，string，symbol。</p>
 </blockquote>
+<p>其中 JS 的数字类型是浮点类型的，没有整型。并且浮点类型基于 IEEE 754标准实现，在使用中会遇到某些 Bug。NaN 也属于 number 类型，并且 NaN 不等于自身。</p>
+<blockquote>
+<p>对于基本类型来说，如果使用字面量的方式，那么这个变量只是个字面量，只有在必要的时候才会转换为对应的类型</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">111</span> <span class="comment">// 这只是字面量，不是 number 类型</span></span><br><span class="line">a.toString() <span class="comment">// 使用时候才会转换为对象类型</span></span><br></pre></td></tr></table></figure>
+<h4 id="对象object是引用类型在使用过程中会遇到浅拷贝和深拷贝的问题">对象（Object）是引用类型，在使用过程中会遇到浅拷贝和深拷贝的问题。</h4>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123; <span class="attr">name</span>: <span class="string">'FE'</span> &#125;</span><br><span class="line"><span class="keyword">let</span> b = a</span><br><span class="line">b.name = <span class="string">'EF'</span></span><br><span class="line"><span class="built_in">console</span>.log(a.name) <span class="comment">// EF</span></span><br></pre></td></tr></table></figure>
+<h1 id="typeof">Typeof</h1>
+<blockquote>
+<p>typeof 对于基本类型，除了 null 都可以显示正确的类型</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="number">1</span> <span class="comment">// 'number'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">'1'</span> <span class="comment">// 'string'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">undefined</span> <span class="comment">// 'undefined'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span> <span class="comment">// 'boolean'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Symbol</span>() <span class="comment">// 'symbol'</span></span><br><span class="line"><span class="keyword">typeof</span> b <span class="comment">// b 没有声明，但是还会显示 undefined</span></span><br><span class="line"><span class="keyword">typeof</span> 对于对象，除了函数都会显示 object</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> [] <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">typeof</span> &#123;&#125; <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">console</span>.log <span class="comment">// 'function'</span></span><br></pre></td></tr></table></figure>
+<p><strong>对于 null 来说，虽然它是基本类型，但是会显示 object，这是一个存在很久了的 Bug</strong></p>
+<pre><code>typeof null // 'object'
+</code></pre>
+<blockquote>
+<p>PS：为什么会出现这种情况呢？因为在 JS 的最初版本中，使用的是 32 位系统，为了性能考虑使用低位存储了变量的类型信息，000 开头代表是对象，然而 null 表示为全零，所以将它错误的判断为 object 。虽然现在的内部类型判断代码已经改变了，但是对于这个 Bug 却是一直流传下来。</p>
+</blockquote>
+<p><strong>如果我们想获得一个变量的正确类型，可以通过 Object.prototype.toString.call(xx)。这样我们就可以获得类似 [object Type] 的字符串。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a</span><br><span class="line"><span class="comment">// 我们也可以这样判断 undefined</span></span><br><span class="line">a === <span class="literal">undefined</span></span><br><span class="line"><span class="comment">// 但是 undefined 不是保留字，能够在低版本浏览器被赋值</span></span><br><span class="line"><span class="keyword">let</span> <span class="literal">undefined</span> = <span class="number">1</span></span><br><span class="line"><span class="comment">// 这样判断就会出错</span></span><br><span class="line"><span class="comment">// 所以可以用下面的方式来判断，并且代码量更少</span></span><br><span class="line"><span class="comment">// 因为 void 后面随便跟上一个组成表达式</span></span><br><span class="line"><span class="comment">// 返回就是 undefined</span></span><br><span class="line">a === <span class="keyword">void</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h1 id="类型转换">类型转换</h1>
+<h2 id="转boolean">转Boolean</h2>
+<blockquote>
+<p>在条件判断时，除了 undefined， null， false， NaN， ‘’， 0， -0，其他所有值都转为 true，包括所有对象。</p>
+</blockquote>
+<h2 id="对象转基本类型">对象转基本类型</h2>
+<p>对象在转换基本类型时，首先会调用 valueOf 然后调用 toString。并且这两个方法你是可以重写的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;</span><br><span class="line">    valueOf() &#123;</span><br><span class="line">    	<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然你也可以重写 Symbol.toPrimitive ，该方法在转基本类型时调用优先级最高。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;</span><br><span class="line">  valueOf() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  toString() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'1'</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  [<span class="built_in">Symbol</span>.toPrimitive]() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="number">1</span> + a <span class="comment">// =&gt; 3</span></span><br><span class="line"><span class="string">'1'</span> + a <span class="comment">// =&gt; '12'</span></span><br></pre></td></tr></table></figure>
+<h1 id="四则运算符">四则运算符</h1>
+<p>只有当加法运算时，其中一方是字符串类型，就会把另一个也转为字符串类型。其他运算只要其中一方是数字，那么另一方就转为数字。并且加法运算会触发三种类型转换：将值转换为原始值，转换为数字，转换为字符串。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> + <span class="string">'1'</span> <span class="comment">// '11'</span></span><br><span class="line"><span class="number">2</span> * <span class="string">'2'</span> <span class="comment">// 4</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>] + [<span class="number">2</span>, <span class="number">1</span>] <span class="comment">// '1,22,1'</span></span><br><span class="line"><span class="comment">// [1, 2].toString() -&gt; '1,2'</span></span><br><span class="line"><span class="comment">// [2, 1].toString() -&gt; '2,1'</span></span><br><span class="line"><span class="comment">// '1,2' + '2,1' = '1,22,1'</span></span><br><span class="line">对于加号需要注意这个表达式 <span class="string">'a'</span> + + <span class="string">'b'</span></span><br><span class="line"></span><br><span class="line"><span class="string">'a'</span> + + <span class="string">'b'</span> <span class="comment">// -&gt; "aNaN"</span></span><br><span class="line"><span class="comment">// 因为 + 'b' -&gt; NaN</span></span><br><span class="line"><span class="comment">// 你也许在一些代码中看到过 + '1' -&gt; 1</span></span><br></pre></td></tr></table></figure>
+<p>#== 操作符<br>
+<img src="https://yck-1254263422.cos.ap-shanghai.myqcloud.com/blog/2019-06-01-043719.png" alt=""></p>
+<p>上图中的 toPrimitive 就是对象转基本类型。</p>
+<p>这里来解析一道题目 [] == ![] // -&gt; true ，下面是这个表达式为何为 true 的步骤</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [] 转成 true，然后取反变成 false</span></span><br><span class="line">[] == <span class="literal">false</span></span><br><span class="line"><span class="comment">// 根据第 8 条得出</span></span><br><span class="line">[] == ToNumber(<span class="literal">false</span>)</span><br><span class="line">[] == <span class="number">0</span></span><br><span class="line"><span class="comment">// 根据第 10 条得出</span></span><br><span class="line">ToPrimitive([]) == <span class="number">0</span></span><br><span class="line"><span class="comment">// [].toString() -&gt; ''</span></span><br><span class="line"><span class="string">''</span> == <span class="number">0</span></span><br><span class="line"><span class="comment">// 根据第 6 条得出</span></span><br><span class="line"><span class="number">0</span> == <span class="number">0</span> <span class="comment">// -&gt; true</span></span><br></pre></td></tr></table></figure>
+<h1 id="比较运算符">比较运算符</h1>
+<pre><code>如果是对象，就通过 toPrimitive 转换对象
+如果是字符串，就通过 unicode 字符索引来比较
+</code></pre>
 
                 
 
@@ -226,9 +268,13 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/blog/article/js数据类型/" data-toggle="tooltip" data-placement="top" title="js数据类型">&larr; Previous Post</a>
+                            <a href="/blog/article/原型/" data-toggle="tooltip" data-placement="top" title="原型">&larr; Previous Post</a>
                         </li>
                     
+                    
+                        <li class="next">
+                            <a href="/blog/article/随记/" data-toggle="tooltip" data-placement="top" title="随记">Next Post &rarr;</a>
+                        </li>
                     
                 </ul>
 
@@ -283,7 +329,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#折腾半天终于弄好了"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x6298;&#x817E;&#x534A;&#x5929;&#xFF0C;&#x7EC8;&#x4E8E;&#x5F04;&#x597D;&#x4E86;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#内置类型"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x5185;&#x7F6E;&#x7C7B;&#x578B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#对象object是引用类型在使用过程中会遇到浅拷贝和深拷贝的问题"><span class="toc-nav-number">1.0.0.1.</span> <span class="toc-nav-text">&#x5BF9;&#x8C61;&#xFF08;Object&#xFF09;&#x662F;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#xFF0C;&#x5728;&#x4F7F;&#x7528;&#x8FC7;&#x7A0B;&#x4E2D;&#x4F1A;&#x9047;&#x5230;&#x6D45;&#x62F7;&#x8D1D;&#x548C;&#x6DF1;&#x62F7;&#x8D1D;&#x7684;&#x95EE;&#x9898;&#x3002;</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#typeof"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Typeof</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#类型转换"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x7C7B;&#x578B;&#x8F6C;&#x6362;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#转boolean"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">&#x8F6C;Boolean</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#对象转基本类型"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">&#x5BF9;&#x8C61;&#x8F6C;&#x57FA;&#x672C;&#x7C7B;&#x578B;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#四则运算符"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x56DB;&#x5219;&#x8FD0;&#x7B97;&#x7B26;</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#比较运算符"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">&#x6BD4;&#x8F83;&#x8FD0;&#x7B97;&#x7B26;</span></a></li></ol>
         
         </div>
       </aside>
@@ -303,7 +349,7 @@
                     <h5><a href="/blog/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/blog/tags/#随记" title="随记">随记</a>
+                          <a class="tag" href="/blog/tags/#js" title="js">js</a>
                         
                     </div>
                 </section>

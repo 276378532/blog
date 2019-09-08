@@ -251,6 +251,313 @@
 </div>
 <hr>
 
+<div class="post-preview">
+
+    <a href="/blog/article/mvvm原理/">
+        <h2 class="post-title">
+                                 
+            mvvm原理
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            发展
+
+MVVM 双向数据绑定 在Angular1.x版本的时候通过的是脏值检测来处理
+而现在无论是React还是Vue还是最新的Angular，其实实现方式都更相近了
+那就是通过数据劫持+发布订阅模式
+真正实现其实靠的也是ES5中提供的Object.defineProperty，当然这是不兼容的所以Vue等只支持了IE8+
+
+为什么是它
+Object.defineProperty()说实在......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 徐翔 on
+            2019-08-18
+        </p>
+        <div class="tags">
+            
+              <a href="/blog/tags/#vue" title="vue">vue</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/article/offsetWidth、clientWidth和scrollWidth/">
+        <h2 class="post-title">
+                                 
+            offsetWidth、clientWidth和scrollWidth
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            1.偏移量
+相对于父元素的偏移
+
+offsetHeight
+offsetWeight=content+padding*2+border*2
+offsetLeft
+offsetTop
+
+
+2.客户区大小
+
+clientWidth = content + padding*2
+clientHeight
+
+
+1234567891011121314151617181920function getVie......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 徐翔 on
+            2019-04-03
+        </p>
+        <div class="tags">
+            
+              <a href="/blog/tags/#css" title="css">css</a>
+            
+              <a href="/blog/tags/#js" title="js">js</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/article/div水平垂直居中/">
+        <h2 class="post-title">
+                                 
+            div水平垂直居中
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            实现以下垂直居中对齐
+
+
+要实现上图的效果看似很简单，实则暗藏玄机，本文总结了一下CSS实现水平垂直居中的方式大概有下面这些，本文将逐一介绍一下
+
+仅居中元素定宽高适用
+
+absolute + 负margin
+absolute + margin auto
+absolute + calc
+
+居中元素不定宽高
+
+absolute + transform
+lineheight
+table
+css-......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 徐翔 on
+            2019-04-01
+        </p>
+        <div class="tags">
+            
+              <a href="/blog/tags/#css" title="css">css</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/article/浅谈BFC/">
+        <h2 class="post-title">
+                                 
+            浅谈BFC
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            一、常见定位方案
+在讲 BFC 之前，我们先来了解一下常见的定位方案，定位方案是控制元素的布局，有三种常见方案:
+
+普通流 (normal flow)
+
+
+在普通流中，元素按照其在 HTML 中的先后位置至上而下布局，在这个过程中，行内元素水平排列，直到当行被占满然后换行，块级元素则会被渲染为完整的一个新行，除非另外指定，否则所有元素默认都是普通流定位，也可以说，普通流中元素的位置由该元素在......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 徐翔 on
+            2019-03-23
+        </p>
+        <div class="tags">
+            
+              <a href="/blog/tags/#css" title="css">css</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/article/call、apply、bind的区别/">
+        <h2 class="post-title">
+                                 
+            call、apply、bind的区别
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            作用
+
+首先问个问题，这三个函数的存在意义是什么？答案是改变函数执行时的上下文，再具体一点就是改变函数运行时的this指向。有了这个认识，接下来我们来看一下,怎么使用这三个函数。
+
+举个栗子
+1234567891011function Person(name)&#123;  this.name = name;  &#125;Person.prototype = &#123;  constru......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 徐翔 on
+            2019-03-17
+        </p>
+        <div class="tags">
+            
+              <a href="/blog/tags/#你不知道的js" title="你不知道的js">你不知道的js</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/article/防抖和节流/">
+        <h2 class="post-title">
+                                 
+            防抖和节流
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            函数防抖(debounce)
+
+在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。
+
+12345678910//模拟一段ajax请求function ajax(content) &#123;  console.log('ajax request ' + content)&#125;let inputa = document.getElementById('unDebounce......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 徐翔 on
+            2019-03-16
+        </p>
+        <div class="tags">
+            
+              <a href="/blog/tags/#你不知道的js" title="你不知道的js">你不知道的js</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/article/原型/">
+        <h2 class="post-title">
+                                 
+            原型
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            原型
+
+先看下面的图
+
+
+
+每个函数都有 prototype 属性，除了 Function.prototype.bind()，该属性指向原型。
+
+
+每个对象都有 __proto__ 属性，指向了创建该对象的构造函数的原型。其实这个属性指向了 [[prototype]]，但是 [[prototype]] 是内部属性，我们并不能访问到，所以使用__proto__ 来访问。
+
+
+对象可以通过 __......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 徐翔 on
+            2019-03-10
+        </p>
+        <div class="tags">
+            
+              <a href="/blog/tags/#js" title="js">js</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/article/js数据类型/">
+        <h2 class="post-title">
+                                 
+            js数据类型
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            内置类型
+
+JS 中分为七种内置类型，七种内置类型又分为两大类型：基本类型和对象（Object）。
+基本类型有六种： null，undefined，boolean，number，string，symbol。
+
+其中 JS 的数字类型是浮点类型的，没有整型。并且浮点类型基于 IEEE 754标准实现，在使用中会遇到某些 Bug。NaN 也属于 number 类型，并且 NaN 不等于自身。
+
+......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 徐翔 on
+            2019-03-03
+        </p>
+        <div class="tags">
+            
+              <a href="/blog/tags/#js" title="js">js</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
 
 
 <!-- Pager -->
@@ -288,7 +595,23 @@
     <div class="tags">
         
             
+            <a href="/blog/tags/#css" title="css" rel="3">css</a>
+            
+        
+            
+            <a href="/blog/tags/#你不知道的js" title="你不知道的js" rel="2">你不知道的js</a>
+            
+        
+            
+            <a href="/blog/tags/#js" title="js" rel="3">js</a>
+            
+        
+            
             <a href="/blog/tags/#随记" title="随记" rel="1">随记</a>
+            
+        
+            
+            <a href="/blog/tags/#vue" title="vue" rel="1">vue</a>
             
         
     </div>
@@ -344,7 +667,23 @@
     <ul>
       
         <li>
-          <a href="/blog/article/随记/">随记</a>
+          <a href="/blog/article/mvvm原理/">mvvm原理</a>
+        </li>
+      
+        <li>
+          <a href="/blog/article/offsetWidth、clientWidth和scrollWidth/">offsetWidth、clientWidth和scrollWidth</a>
+        </li>
+      
+        <li>
+          <a href="/blog/article/div水平垂直居中/">div水平垂直居中</a>
+        </li>
+      
+        <li>
+          <a href="/blog/article/浅谈BFC/">浅谈BFC</a>
+        </li>
+      
+        <li>
+          <a href="/blog/article/call、apply、bind的区别/">call、apply、bind的区别</a>
         </li>
       
     </ul>
@@ -358,11 +697,9 @@
 <ul class="list-inline">
 
     
-        <li><a href="http://blog.csdn.net/" target="_blank">CSDN Blog 徐翔</a></li>
+        <li><a href="http://zuoning327.com" target="_blank">左宁の博客</a></li>
     
-        <li><a href="http://dockone.io/" target="_blank">DockOne 徐翔</a></li>
-    
-        <li><a href="https://yq.aliyun.com/" target="_blank">阿里云栖社区 徐翔</a></li>
+        <li><a href="http://www.decadefarewell.top" target="_blank">浪子回头</a></li>
     
 </ul>
 
@@ -371,7 +708,7 @@
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/03/">March 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li></ul>
     </div>
 
         <hr>

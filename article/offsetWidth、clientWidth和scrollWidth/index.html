@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          随记 - 徐翔的blog
+          offsetWidth、clientWidth和scrollWidth - 徐翔的blog
         
     </title>
 
-    <link rel="canonical" href="git@github.com:276378532/blog.git/blog/article/随记/">
+    <link rel="canonical" href="git@github.com:276378532/blog.git/blog/article/offsetWidth、clientWidth和scrollWidth/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
@@ -88,14 +88,16 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/blog/tags/#随记" title="随记">随记</a>
+                              <a class="tag" href="/blog/tags/#css" title="css">css</a>
+                            
+                              <a class="tag" href="/blog/tags/#js" title="js">js</a>
                             
                         </div>
-                        <h1>随记</h1>
+                        <h1>offsetWidth、clientWidth和scrollWidth</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 徐翔 on
-                            2019-02-26
+                            2019-04-03
                         </span>
                     </div>
                 
@@ -212,12 +214,94 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="折腾半天终于弄好了">折腾半天，终于弄好了</h2>
-<p>仅此纪念</p>
+                <h2 id="1偏移量">1.偏移量</h2>
+<p><strong>相对于父元素的偏移</strong></p>
+<ul>
+<li>offsetHeight</li>
+<li>offsetWeight=content+padding*2+border*2</li>
+<li>offsetLeft</li>
+<li>offsetTop</li>
+</ul>
+<p><img src="/blog/img/article/1.webp" alt=""></p>
+<h2 id="2客户区大小">2.客户区大小</h2>
+<ul>
+<li>clientWidth = content + padding*2</li>
+<li>clientHeight</li>
+</ul>
+<p><img src="/blog/img/article/2.webp" alt=""></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getViewport</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.compatMode == <span class="string">"backCompat"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            width: <span class="built_in">document</span>.body.clientWidth,</span><br><span class="line">            height: <span class="built_in">document</span>.body.clientHeight</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            width: <span class="built_in">document</span>.documentElement.clientWidth,</span><br><span class="line">            height: <span class="built_in">document</span>.documentElement.clientHeight</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*document.compatMode:判断当前浏览器采用的渲染方式</span></span><br><span class="line"><span class="comment"> * BackCompat：标准兼容模式关闭。</span></span><br><span class="line"><span class="comment">*CSS1Compat：标准兼容模式开启。</span></span><br><span class="line"><span class="comment">* 当document.compatMode等于BackCompat时，浏览器客户区宽度是document.body.clientWidth；</span></span><br><span class="line"><span class="comment">* 当document.compatMode等于CSS1Compat时，浏览器客户区宽度是document.documentElement.clientWidth。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h2 id="3滚动大小">3.滚动大小</h2>
+<ul>
+<li>scrollHeight</li>
+<li>scrollWidth</li>
+<li>scrollLeft</li>
+<li>scrollTop</li>
+</ul>
+<p><img src="/blog/img/article/3.webp" alt=""></p>
+<h2 id="4dtd">4.DTD</h2>
+<p>DTD告诉浏览器当前文档用的是什么标记语言，然后浏览器才能正确的根据W3C标准解析文档代码。</p>
+<p>**html4有三种模式 **</p>
+<ul>
+<li>
+<p>Strict DTD：严格的文档类型定义<br>
+不能包含已过时的元素（或属性）和框架元素。</p>
+</li>
+<li>
+<p>Transitional DTD：过渡的文档类型定义<br>
+能包含已过时的元素和属性但不能包含框架元素。</p>
+</li>
+<li>
+<p>Frameset DTD: 框架集文档类型定义<br>
+能包含已过时的元素和框架元素</p>
+</li>
+</ul>
 <blockquote>
-<p>不积跬步无以至千里<br>
-长路漫漫 只能慢慢来了</p>
+<p>在html文档中定义DTD就是通过！doctype定义。在html5中 &lt;!doctype html&gt;</p>
 </blockquote>
+<p><strong>document.documentElement与document.body</strong></p>
+<ul>
+<li>document代表的是整个文档(对于一个网页来说包括整个网页结构)，document.documentElement是整个文档节点树的根节点，在网页中即html标签；</li>
+<li>document.body是整个文档DOM节点树里的body节点，网页中即为body标签元素。</li>
+</ul>
+<p>我们常看见如下这种写法获取页面滚动条滚过的长度：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> top = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;</span><br><span class="line">或</span><br><span class="line"><span class="keyword">var</span> top = <span class="built_in">document</span>.documentElement.scrollTop ? <span class="built_in">document</span>.documentElement.scrollTop : <span class="built_in">document</span>.body.scrollTop;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在文档使用了DTD时，document.body.scrollTop的值为0，此时需要使用document.documentElement.scrollTop来获取滚动条滚过的长度；在未使用DTD定义文档时，使用document.body.scrollTop获取值。</p>
+</blockquote>
+<h2 id="5window">5.window</h2>
+<p><strong>与window相关的宽高有一下几个：</strong></p>
+<ul>
+<li>window.innerWidth，内部的宽度不包括工具栏</li>
+<li>window.innerHeight，内部的高度不包含导航栏</li>
+<li>window.outWidth，外部的宽度包括工具栏</li>
+<li>window.outHeight，外部的高度包括导航栏</li>
+</ul>
+<p><strong>挂靠在window下的宽高还有window.screen， window.screen包含有关用户屏幕的信息。它包括：</strong></p>
+<ul>
+<li>window.screen.width   屏幕宽度</li>
+<li>window.screen.height  屏幕高度</li>
+<li>window.screen.availHeight 屏幕可用高度</li>
+<li>window.screen.availWidth  屏幕宽度</li>
+<li>window.screenTop    距离屏幕顶部距离</li>
+<li>window.screenLeft   距离屏幕左端距离</li>
+</ul>
+<h2 id="6javascript窗口属性">6.JavaScript窗口属性：</h2>
+<ul>
+<li>网页可见区域宽：document.documentElemen.clientWidth（不包括边框）</li>
+<li>网页可见区域高：document.documentElemen.clientHeight（不包括边框）</li>
+<li>网页可见区域宽：document.documentElemen.offsetWidth (包括边框)</li>
+<li>网页可见区域高：document.documentElemen.offsetHeight (包括边框)</li>
+<li>网页正文全文宽：document.documentElemen.scrollWidth</li>
+<li>网页正文全文高：document.documentElemen.scrollHeight</li>
+<li>网页被卷去的高：document.documentElemen.scrollTop</li>
+<li>网页被卷去的左：document.documentElemen.scrollLeft</li>
+<li>网页正文部分上：window.screenTop</li>
+<li>网页正文部分左：window.screenLeft</li>
+<li>屏幕分辨率的高：window.screen.height</li>
+<li>屏幕分辨率的宽：window.screen.width</li>
+<li>屏幕可用工作区高度：window.screen.availHeight（去除底层的桌面导航）</li>
+<li>屏幕可用工作区宽度：window.screen.availWidth</li>
+</ul>
 
                 
 
@@ -226,9 +310,13 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/blog/article/js数据类型/" data-toggle="tooltip" data-placement="top" title="js数据类型">&larr; Previous Post</a>
+                            <a href="/blog/article/mvvm原理/" data-toggle="tooltip" data-placement="top" title="mvvm原理">&larr; Previous Post</a>
                         </li>
                     
+                    
+                        <li class="next">
+                            <a href="/blog/article/div水平垂直居中/" data-toggle="tooltip" data-placement="top" title="div水平垂直居中">Next Post &rarr;</a>
+                        </li>
                     
                 </ul>
 
@@ -283,7 +371,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#折腾半天终于弄好了"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x6298;&#x817E;&#x534A;&#x5929;&#xFF0C;&#x7EC8;&#x4E8E;&#x5F04;&#x597D;&#x4E86;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1偏移量"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1.&#x504F;&#x79FB;&#x91CF;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2客户区大小"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2.&#x5BA2;&#x6237;&#x533A;&#x5927;&#x5C0F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3滚动大小"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3.&#x6EDA;&#x52A8;&#x5927;&#x5C0F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4dtd"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4.DTD</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5window"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5.window</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6javascript窗口属性"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">6.JavaScript&#x7A97;&#x53E3;&#x5C5E;&#x6027;&#xFF1A;</span></a></li></ol>
         
         </div>
       </aside>
@@ -303,7 +391,9 @@
                     <h5><a href="/blog/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/blog/tags/#随记" title="随记">随记</a>
+                          <a class="tag" href="/blog/tags/#css" title="css">css</a>
+                        
+                          <a class="tag" href="/blog/tags/#js" title="js">js</a>
                         
                     </div>
                 </section>
