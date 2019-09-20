@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>git@github.com:276378532/blog.git/article/%E7%A7%8B%E6%8B%9B%E9%9A%8F%E8%AE%B0/</loc>
+        <lastmod>2019-09-20T01:06:51.207Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>git@github.com:276378532/blog.git/article/mvvm%E5%8E%9F%E7%90%86/</loc>
         <lastmod>2019-09-08T13:02:27.856Z</lastmod>
         <changefreq>weekly</changefreq>

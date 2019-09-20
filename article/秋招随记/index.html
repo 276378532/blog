@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          浅谈BFC - 徐翔的blog
+          秋招随记 - 徐翔的blog
         
     </title>
 
-    <link rel="canonical" href="git@github.com:276378532/blog.git/blog/article/浅谈BFC/">
+    <link rel="canonical" href="git@github.com:276378532/blog.git/blog/article/秋招随记/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/blog/tags/#css" title="css">css</a>
+                              <a class="tag" href="/blog/tags/#随记" title="随记">随记</a>
                             
                         </div>
-                        <h1>浅谈BFC</h1>
+                        <h1>秋招随记</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 徐翔 on
-                            2019-03-23
+                            2019-09-20
                         </span>
                     </div>
                 
@@ -212,67 +212,33 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="一-常见定位方案">一、常见定位方案</h2>
-<p>在讲 BFC 之前，我们先来了解一下常见的定位方案，定位方案是控制元素的布局，有三种常见方案:</p>
-<ul>
-<li>普通流 (normal flow)</li>
-</ul>
-<blockquote>
-<p>在普通流中，元素按照其在 HTML 中的先后位置至上而下布局，在这个过程中，行内元素水平排列，直到当行被占满然后换行，块级元素则会被渲染为完整的一个新行，除非另外指定，否则所有元素默认都是普通流定位，也可以说，普通流中元素的位置由该元素在 HTML 文档中的位置决定。</p>
-</blockquote>
-<ul>
-<li>浮动 (float)</li>
-</ul>
-<blockquote>
-<p>在浮动布局中，元素首先按照普通流的位置出现，然后根据浮动的方向尽可能的向左边或右边偏移，其效果与印刷排版中的文本环绕相似。</p>
-</blockquote>
-<ul>
-<li>绝对定位 (absolute positioning)</li>
-</ul>
-<blockquote>
-<p>在绝对定位布局中，元素会整体脱离普通流，因此绝对定位元素不会对其兄弟元素造成影响，而元素具体的位置由绝对定位的坐标决定。</p>
-</blockquote>
-<h2 id="二-bfc-概念">二、BFC 概念</h2>
-<p>Formatting context(格式化上下文) 是 W3C CSS2.1 规范中的一个概念。它是页面中的一块渲染区域，并且有一套渲染规则，它决定了其子元素将如何定位，以及和其他元素的关系和相互作用。</p>
-<p>那么 BFC 是什么呢？</p>
-<p>BFC 即 Block Formatting Contexts (块级格式化上下文)，它属于上述定位方案的普通流。</p>
-<blockquote>
-<p>具有 BFC 特性的元素可以看作是隔离了的独立容器，容器里面的元素不会在布局上影响到外面的元素，并且 BFC 具有普通容器所没有的一些特性。</p>
-</blockquote>
-<p>通俗一点来讲，可以把 BFC 理解为一个封闭的大箱子，箱子内部的元素无论如何翻江倒海，都不会影响到外部。</p>
-<h2 id="三-触发-bfc">三、触发 BFC</h2>
-<p>只要元素满足下面任一条件即可触发 BFC 特性：</p>
-<ul>
-<li>根元素</li>
-<li>浮动元素：float 除 none 以外的值</li>
-<li>绝对定位元素：position (absolute、fixed)</li>
-<li>display 为 inline-block、table-cells、flex</li>
-<li>overflow 除了 visible 以外的值 (hidden、auto、scroll)</li>
-</ul>
-<h2 id="四-bfc-特性及应用">四、BFC 特性及应用</h2>
-<h3 id="1-同一个-bfc-下外边距会发生折叠">1. 同一个 BFC 下外边距会发生折叠</h3>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">div&#123;</span><br><span class="line">    width: 100px;</span><br><span class="line">    height: 100px;</span><br><span class="line">    background: lightblue;</span><br><span class="line">    margin: 100px;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://pic4.zhimg.com/80/v2-0a9ca8952c83141250a2d9002e6d2047_hd.png" alt=""></p>
-<p>从效果上看，因为两个 div 元素都处于同一个 BFC 容器下 (这里指 body 元素) 所以第一个 div 的下边距和第二个 div 的上边距发生了重叠，所以两个盒子之间距离只有 100px，而不是 200px。</p>
-<p>首先这不是 CSS 的 bug，我们可以理解为一种规范，<strong>如果想要避免外边距的重叠，可以将其放在不同的 BFC 容器中。</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">.container &#123;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">&#125;</span><br><span class="line">p &#123;</span><br><span class="line">    width: 100px;</span><br><span class="line">    height: 100px;</span><br><span class="line">    background: lightblue;</span><br><span class="line">    margin: 100px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这时候，两个盒子边距就变成了 200px</p>
-<p><img src="https://pic2.zhimg.com/80/v2-5b8d6e8b2b507352900c1ece00018855_hd.png" alt=""></p>
-<h3 id="2-bfc-可以包含浮动的元素清除浮动">2. BFC 可以包含浮动的元素（清除浮动）</h3>
-<p>我们都知道，浮动的元素会脱离普通文档流，来看下下面一个例子</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"border: 1px solid #000;"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"width: 100px;height: 100px;background: #eee;float: left;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://pic4.zhimg.com/80/v2-371eb702274af831df909b2c55d6a14b_hd.png" alt=""></p>
-<p>由于容器内元素浮动，脱离了文档流，所以容器只剩下 2px 的边距高度。如果使触发容器的 BFC，那么容器将会包裹着浮动元素。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"border: 1px solid #000;overflow: hidden"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"width: 100px;height: 100px;background: #eee;float: left;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>效果如图：<br>
-<img src="https://pic4.zhimg.com/80/v2-cc8365db5c9cc5ca003ce9afe88592e7_hd.png" alt=""></p>
-<h3 id="3-bfc-可以阻止元素被浮动元素覆盖">3. BFC 可以阻止元素被浮动元素覆盖</h3>
-<p>先来看一个文字环绕效果：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"height: 100px;width: 100px;float: left;background: lightblue"</span>&gt;</span>我是一个左浮动的元素<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"width: 200px; height: 200px;background: #eee"</span>&gt;</span>我是一个没有设置浮动, </span><br><span class="line">也没有触发 BFC 元素, width: 200px; height:200px; background: #eee;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://pic4.zhimg.com/80/v2-dd3e636d73682140bf4a781bcd6f576b_hd.png" alt=""><br>
-这时候其实第二个元素有部分被浮动元素所覆盖，(但是文本信息不会被浮动元素所覆盖) 如果想避免元素被覆盖，可触第二个元素的 BFC 特性，在第二个元素中加入** overflow: hidden**，就会变成：</p>
-<p><img src="https://pic3.zhimg.com/80/v2-5ebd48f09fac875f0bd25823c76ba7fa_hd.png" alt=""><br>
-这个方法可以用来实现两列自适应布局，效果不错，这时候左边的宽度固定，右边的内容自适应宽度(去掉上面右边内容的宽度)。</p>
+                <meta name="referrer" content="no-referrer">
+<h2 id="秋招小总结">秋招小总结</h2>
+<p>从8月底开始投简历到现在参加过大大小小的笔试和面试，有一面，二面，也有拿到offer，稍微总结一下秋招的一些经过，好像笔试是做了不少，但是真正有面试的还只有三家公司，长沙一家公司，然后昨天的小米视频一面，到昨天下午深信服的一面，二面，顺便吐槽一下腾讯，五道编程题ac四道，都没有收到面试邀请，网易直接简历没过筛选 hhh太难了我</p>
+<h3 id="长沙某公司暂不透露">长沙某公司（暂不透露）</h3>
+<p>回想那天一大早急急忙忙的从学校出发，到下午一点多才赶到面试地点，开始了秋招1的第一次面试，紧张！紧张！超紧张！ 一上来就是问<strong>Vue的生命周期，mvvm模式，发布订阅者模式，父子组件通信</strong>，坐车有点累然后一开始就是从底层开始上手，说好的面试官会有从简到难的一个过渡呢，网上都是骗人的，紧张，尤其是有些自己心里很清楚，但是表述的时候就组织语言有点困难，于是我就发现了面试一个关键的点，你自己要知道，而且你还得讲给面试官听，证明你自己懂，这是我这次面试最大的收获，然后后面还问了些<strong>js的原型链，this，用css画三角形，bfc，js的同步异步，闭包，es6，钩子函数和普通函数的区别，怎么让几个异步函数同步执行等许多问题，有些问完就不记得了</strong>，我全给面试官回答并解释了一遍，但是就是一种明明知道这是什么，但是却有点说不出来的意思，所以个人自己觉得有些问题自己表述的不够好，在离开公司的时候以为自己凉了，但是没想到一个小时后hr就给我打了电话问了一些情况，最后给我发了offer，也算是拿到了秋招的第一次offer，虽说不是大厂，但是第一次面试就拿到了offer，还是非常开心的。</p>
+<h3 id="小米视频面">小米视频面</h3>
+<p>以为小米笔试凉了，那天正好是面试上面那家公司，然后小米的笔试是在网吧做的，个人感觉发挥不太好，以至于接到小米面试邀约邮件，小米把时间弄错了导致下午五点收到邮件但是预约时间是上午11点，以为自己小米笔试凉了，然后给小米发了邮件询问是不是时间弄错了，没想到还真是小米弄错了时间，更没想到的是小米竟然还回复了我，受宠若惊哈哈哈，然后约了第二天上午的视屏面，重点来了，面试官是一个超级好看的小姐姐，我我我我一开始就紧张的不知道自我介绍了，小姐姐真的超级好，细心引导，和小姐姐聊了半小时，所有问题都答上来了，自我感觉良好，不知道有没有二面的机会，等消息中</p>
+<p>一些问题就是：</p>
+<ol>
+<li>主流浏览器以及内核</li>
+<li>cookie 和 session 以及 localStorage sessionStorage的区别</li>
+<li>浏览器的缓存 以及流程</li>
+<li>跨域问题</li>
+<li>浏览器解析html文件</li>
+<li>性能优化</li>
+<li>暂时想起这些 想到后再补充</li>
+</ol>
+<h3 id="深信服">深信服</h3>
+<p>深信服的笔试题目真的的挺体现专业性的，接到面试的通知，第二天到中南参加面试，稍微等了一些时间，我和我带哥一起来的，带哥在我前面面试的，他出来就和我说挺看重的数据结构，然后他数据结构回答的不怎么好，开始我不知道他已经挂了，我还以为面试完等通知，或者以为大哥的实力已经二面了，因为他进去了好久，随后我就进去开始了深信服的一面</p>
+<h4 id="一面">一面</h4>
+<p>一个小哥哥，刚上完厕所和他一起进去的，先递给我两张白纸，一进去就调出我的笔试成绩，顺便我自我介绍了一下，随后他突然问我，你觉得你的编程能力怎么样，我没反应过来哈哈为什么这样问，我就弱弱的答了句，我的编程能力还有待提高，他说我编程得分挺高的表扬了我一波，他还开个玩笑说我看看系统有没有评错，哇那心里开心的不得了，气氛一下就轻松起来了，随后正式开始面试，他问我数据结构怎么样，老老实实回答上过数据结构的课，数据结构不是特别好，但是基本的数据结构还是知道的，面试官马上抛出了第一个问题，你写个青蛙跳台阶的算法，顺便递给我一支笔，两分钟后他满意的点点头，然后问了一些堆，讲了下大根堆和堆的中序遍历可以排序，随后接着给我一个类似json的数据格式[{id:1,child:[id:2,child:[…]]],让我遍历输出所有的id, 然后我就在纸上给他写了个深度遍历，用的栈，他随即问道能不能用递归写，马上说可以，一分钟后他给他看，又是点了头说可以，随后突然问我会不会c++，哈哈给我整懵了，说了下学校有安排c,c++,java的课程，然后太久没用也不记得了，现在还是js比较熟练，然后终于不用手写代码了，问了下知道两列布局吗，怎么写，随后答了flex布局，他说这样不是那也太简单了，随即就是float，他说兼容性不好，它提示我用绝对布局，瞬间想出</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#div1&#123;</span><br><span class="line">	width:<span class="number">200</span>px;</span><br><span class="line">&#125;</span><br><span class="line">#div2&#123;</span><br><span class="line">	position:absolute;</span><br><span class="line">	left:<span class="number">200</span>px;</span><br><span class="line">	top:<span class="number">0</span>;</span><br><span class="line">	right:<span class="number">0</span>;</span><br><span class="line">	bottom:<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>出了他想要的答案，笑着点头并且说他想要的就是这个，随即问了些水平垂直居中，面试官小哥哥真的太好了，他会笑着和你沟通，而且会慢慢引导你走向正确答案，回答对了他还会肯定你，这是我这三次面试来最轻松愉快的一次，完全没有紧张，后面还接着问了些cookie,localstorage，事件委托，其中有个form表单可以跨域我还真不知道，深入问了下form表单和ajax的区别，答出一个回调函数和一个页面刷新，还有一个就是ajax可以增加或改变请求头，还有脑抽对component这个是什么我尽然答的不知道，面试官小哥哥说vue的子类component我都懵了，一直在找子类有什么，原来就是开发必用的组件。。。这个坑让我倒在了二面，一面就笑呵呵的过去了，面试官小哥哥和我说找下hr，就说是他让我找的，随后面试官也说了等下准备二面</p>
+<h4 id="二面凉凉">二面（凉凉）</h4>
+<p>我带哥说进了二面就是boss面了，我满心欢喜的看了下深信服的一些信息，准备第二轮的面试，然而一进去就是噩梦的开端，简单的自我介绍以及简单的项目介绍，随即问到vue生命周期，然后问到单页面和多页面的区别以及优缺点，我还真没了解过这个，简单讲了下页面刷新的问题，hash路由是监听的hashchage事件，一些游览器不支持这个事件你会怎么办，我也说到比较url，找到改变的hash，随后问了些单页面的优缺点，开发需要注意的点，以及模块化，二面面试官有丶严肃，让我挺紧张的，稍微回答了他这些问题，后面问我有没有写过自己的工具类过着自己的插件，我说没有，最后炸点来了，应该是和一面小哥哥沟通了我的情况，我看到了微信界面，问了我有没有写过自己的组件，我脑壳真是谢特了，我以为是问的有没有写过前端通用化的组件，这个我水平确实达不到，我就回答了说没有，事后结束才发现原来问的就是普通的组件，凉凉，前端开发用脚手架而且集成了vuex和vue-router，创建一个文件不就是一个个的组件嘛，我真是瓦特了，这个问题我就觉得很没用，就不能直接问我组件间的通信吗，哭晕在厕所，然后让面试官误以为只是了解了一些vue停留在没写组件之前，他面试的时候也有说到这点，我当时都没反应过来，最后实在没什么问的就问了个数据结构，手写没能写出来，思路倒是和面试官差不多，随后结束了二面也没让我找hr，说让我回去等消息，基本凉凉了，我真的想去和面试官解释下是我们出现了沟通误区，我没有你想象的那么菜，写vue都不用组件的那种，当然我还是很菜----</p>
+<h2 id="总结一下">总结一下</h2>
+<p>虽说拿到了小公司的offer，要走的路还是很长，自己还是有一颗想进大厂的心，不出意外十月份就要去实习了，一来接触项目提高实际开发能力，二来不能松懈自己，下班还是得多刷题，提高自己的数据结构和算法能力，秋招没赶上还有春招，只希望毕业能进入中上型企业工作</p>
 
                 
 
@@ -280,13 +246,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/blog/article/div水平垂直居中/" data-toggle="tooltip" data-placement="top" title="div水平垂直居中">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/blog/article/call、apply、bind的区别/" data-toggle="tooltip" data-placement="top" title="call、apply、bind的区别">Next Post &rarr;</a>
+                            <a href="/blog/article/mvvm原理/" data-toggle="tooltip" data-placement="top" title="mvvm原理">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -342,7 +304,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#一-常见定位方案"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x4E00;&#x3001;&#x5E38;&#x89C1;&#x5B9A;&#x4F4D;&#x65B9;&#x6848;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#二-bfc-概念"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x4E8C;&#x3001;BFC &#x6982;&#x5FF5;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#三-触发-bfc"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x4E09;&#x3001;&#x89E6;&#x53D1; BFC</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#四-bfc-特性及应用"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x56DB;&#x3001;BFC &#x7279;&#x6027;&#x53CA;&#x5E94;&#x7528;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-同一个-bfc-下外边距会发生折叠"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">1. &#x540C;&#x4E00;&#x4E2A; BFC &#x4E0B;&#x5916;&#x8FB9;&#x8DDD;&#x4F1A;&#x53D1;&#x751F;&#x6298;&#x53E0;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-bfc-可以包含浮动的元素清除浮动"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">2. BFC &#x53EF;&#x4EE5;&#x5305;&#x542B;&#x6D6E;&#x52A8;&#x7684;&#x5143;&#x7D20;&#xFF08;&#x6E05;&#x9664;&#x6D6E;&#x52A8;&#xFF09;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-bfc-可以阻止元素被浮动元素覆盖"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">3. BFC &#x53EF;&#x4EE5;&#x963B;&#x6B62;&#x5143;&#x7D20;&#x88AB;&#x6D6E;&#x52A8;&#x5143;&#x7D20;&#x8986;&#x76D6;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#秋招小总结"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x79CB;&#x62DB;&#x5C0F;&#x603B;&#x7ED3;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#长沙某公司暂不透露"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x957F;&#x6C99;&#x67D0;&#x516C;&#x53F8;&#xFF08;&#x6682;&#x4E0D;&#x900F;&#x9732;&#xFF09;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#小米视频面"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x5C0F;&#x7C73;&#x89C6;&#x9891;&#x9762;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#深信服"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x6DF1;&#x4FE1;&#x670D;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#一面"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">&#x4E00;&#x9762;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#二面凉凉"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">&#x4E8C;&#x9762;&#xFF08;&#x51C9;&#x51C9;&#xFF09;</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#总结一下"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x603B;&#x7ED3;&#x4E00;&#x4E0B;</span></a></li></ol>
         
         </div>
       </aside>
@@ -362,7 +324,7 @@
                     <h5><a href="/blog/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/blog/tags/#css" title="css">css</a>
+                          <a class="tag" href="/blog/tags/#随记" title="随记">随记</a>
                         
                     </div>
                 </section>
