@@ -2,15 +2,15 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>git@github.com:276378532/blog.git/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84js/</loc>
-        <lastmod>2019-09-06T01:51:32.432Z</lastmod>
+        <loc>git@github.com:276378532/blog.git/tags/%E9%9A%8F%E8%AE%B0/</loc>
+        <lastmod>2019-08-26T12:32:04.910Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>git@github.com:276378532/blog.git/tags/js/</loc>
-        <lastmod>2019-09-08T06:45:21.092Z</lastmod>
+        <loc>git@github.com:276378532/blog.git/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84js/</loc>
+        <lastmod>2019-09-06T01:51:32.432Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -30,8 +30,8 @@
     </url>
 
     <url>
-        <loc>git@github.com:276378532/blog.git/tags/%E9%9A%8F%E8%AE%B0/</loc>
-        <lastmod>2019-09-30T14:42:01.299Z</lastmod>
+        <loc>git@github.com:276378532/blog.git/tags/js/</loc>
+        <lastmod>2020-02-18T05:15:52.216Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
