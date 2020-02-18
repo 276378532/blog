@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/blog/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          布局 - 徐翔的blog
+        
+    </title>
+
+    <link rel="canonical" href="git@github.com:276378532/blog.git/blog/article/布局/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/blog/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/blog/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/blog/css/highlight.css">
+
+    <link rel="stylesheet" href="/blog/css/widget.css">
+
+    <link rel="stylesheet" href="/blog/css/rocket.css">
+
+    <link rel="stylesheet" href="/blog/css/signature.css">
+
+    <link rel="stylesheet" href="/blog/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/blog/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/blog/tags/#css" title="css">css</a>
+                            
+                              <a class="tag" href="/blog/tags/#html" title="html">html</a>
+                            
+                        </div>
+                        <h1>布局</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 徐翔 on
+                            2019-05-18
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/blog/">徐翔</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/blog/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/blog/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/blog/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/blog/archive/">Archives</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="布局">布局</h1>
+<h4 id="在开发中常常用到三列布局我简单来说一下我自己的一些运用和理解">在开发中常常用到三列布局，我简单来说一下我自己的一些运用和理解</h4>
+<h2 id="三列布局">三列布局</h2>
+<blockquote>
+<p>两侧宽度固定，中间宽度自适应的三栏布局。<br>
+可以用float,flex来实现,我具体说一下float实现的<br>
+包括圣杯布局和双飞翼布局</p>
+</blockquote>
+<h3 id="圣杯布局">圣杯布局</h3>
+<ul>
+<li>两侧宽度固定，中间宽度自适应</li>
+<li>中间部分在DOM结构上优先，以便先行渲染</li>
+<li>允许三列中的任意一列成为最高列</li>
+<li>只需要使用一个额外的&lt; div &gt;标签</li>
+</ul>
+<h4 id="dom结构">DOM结构</h4>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">"header"</span>&gt;header&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;div id="container"&gt;</span></span><br><span class="line"><span class="regexp">  &lt;div id="center"&gt;center&lt;/</span>div&gt;</span><br><span class="line">  &lt;div id=<span class="string">"left"</span>&gt;left&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  &lt;div id="right"&gt;right&lt;/</span>div&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;div id="footer"&gt;footer&lt;/</span>div&gt;</span><br></pre></td></tr></table></figure>
+<p>首先定义出整个布局的DOM结构，主体部分是由container包裹的center,left,right三列，其中center定义在最前面。</p>
+<h3 id="css代码">css代码</h3>
+<p>假设左侧的固定宽度为200px，右侧的固定宽度为150px，则首先在container上设置：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#container &#123;</span><br><span class="line">  padding-left: <span class="number">200</span>px; </span><br><span class="line">  padding-right: <span class="number">150</span>px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/9397803-aaea086d37ac9e06.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/540/format/webp" alt=""></p>
+<p>随后分别为三列设置宽度与浮动，同时对footer设置清除浮动：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#container div &#123;</span><br><span class="line">  float: left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#center &#123;</span><br><span class="line">  width: <span class="number">100</span>%;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#left &#123;</span><br><span class="line">  width: <span class="number">200</span>px; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#right &#123;</span><br><span class="line">  width: <span class="number">150</span>px; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#footer &#123;</span><br><span class="line">  clear: both;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>得到以下效果：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9397803-908ab18834f384ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/540/format/webp" alt=""></p>
+<p>根据浮动的特性，由于center的宽度为100%，即占据了第一行的所有空间，所以left和right被“挤”到了第二行。</p>
+<p>接下来的工作是将left放置到之前预留出的位置上，这里使用负外边距（nagetive margin）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#left &#123;</span><br><span class="line">  width: <span class="number">200</span>px; </span><br><span class="line">  margin-left: <span class="number">-100</span>%;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>得到：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9397803-0092cb112431e076.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/540/format/webp" alt=""></p>
+<p>随后还需要使用定位(position)方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#left &#123;</span><br><span class="line">  width: <span class="number">200</span>px; </span><br><span class="line">  margin-left: <span class="number">-100</span>%;</span><br><span class="line">  position: relative;</span><br><span class="line">  right: <span class="number">200</span>px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用position: relative和right: 200px将left的位置在原有位置基础上左移200px，以完成left的放置：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9397803-0f0134d16c865fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/540/format/webp" alt=""></p>
+<p>接下来放置right，只需添加一条声明即可：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#right &#123;</span><br><span class="line">  width: <span class="number">150</span>px; </span><br><span class="line">  margin-right: <span class="number">-150</span>px; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>得到最终的效果图：<br>
+<img src="https://upload-images.jianshu.io/upload_images/9397803-e964c6f980b5da16.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/540/format/webp" alt=""></p>
+<p>至此，布局效果完成。不过还需要考虑最后一步，那就是页面的<strong>最小宽度</strong>：要想保证该布局效果正常显示，由于两侧都具有固定的宽度，所以需要给定页面一个最小的宽度，但这并不只是简单的200+150=350px。回想之前left使用了position: relative，所以就意味着在center开始的区域，还存在着一个left的宽度。所以页面的最小宽度应该设置为200+150+200=550px：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">body &#123;</span><br><span class="line">  min-width: <span class="number">550</span>px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后提醒一下很多朋友可能会忽略的小细节：在#center中，包含了一条声明width: 100%，这是中间栏能够做到自适应的关键。可能会有朋友认为不需要设置这条声明，因为觉得center在不设置宽度的情况下会默认将宽度设置为父元素(container)的100%宽度。但需要注意到，center是浮动元素，由于浮动具有包裹性，在不显式设置宽度的情况下会自动“收缩”到内容的尺寸大小。如果去掉width: 100%，则当中间栏不包含或者包含较少内容时，整个布局会“崩掉”，而达不到这样的效果：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9397803-09a8a5617072d0a2.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/904/format/webp" alt=""></p>
+<h3 id="双飞翼">双飞翼</h3>
+<p>双飞翼布局和圣杯布局差别不大，运用的原理类似<br>
+这里就简单贴出代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">"en"</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">"viewport"</span> content=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">    &lt;style&gt;</span></span><br><span class="line"><span class="regexp">        .wrapper &#123;</span></span><br><span class="line"><span class="regexp">            min-width: 500px;</span></span><br><span class="line"><span class="regexp">            height: 1000px;</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">        #container &#123;</span></span><br><span class="line"><span class="regexp">            width: 100%;  </span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">        .column &#123;</span></span><br><span class="line"><span class="regexp">            float: left;</span></span><br><span class="line"><span class="regexp">            height: 100%;</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">        #center &#123;</span></span><br><span class="line"><span class="regexp">            height: 1000px;</span></span><br><span class="line"><span class="regexp">            margin-left: 200px;</span></span><br><span class="line"><span class="regexp">            margin-right: 150px;</span></span><br><span class="line"><span class="regexp">            background-color: red;</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">        #left &#123;</span></span><br><span class="line"><span class="regexp">            width: 200px;</span></span><br><span class="line"><span class="regexp">            margin-left: -100%;</span></span><br><span class="line"><span class="regexp">            background-color: royalblue;</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">        #right &#123;</span></span><br><span class="line"><span class="regexp">            width: 150px;</span></span><br><span class="line"><span class="regexp">            margin-left: -150px;</span></span><br><span class="line"><span class="regexp">            background-color: sandybrown;</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>style&gt;</span><br><span class="line">&lt;<span class="regexp">/head&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;body&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div class="wrapper"&gt;</span></span><br><span class="line"><span class="regexp">        &lt;div id="container" class="column"&gt;</span></span><br><span class="line"><span class="regexp">            &lt;div id="center"&gt;中&lt;/</span>div&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;div id="left" class="column"&gt;左&lt;/</span>div&gt;</span><br><span class="line">        &lt;div id=<span class="string">"right"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"column"</span>&gt;右&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line"> </span><br><span class="line">&lt;<span class="regexp">/body&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;/</span>html&gt;</span><br></pre></td></tr></table></figure>
+<p>##总结与思考<br>
+通过对圣杯布局和双飞翼布局的介绍可以看出，圣杯布局在DOM结构上显得更加直观和自然，且在日常开发过程中，更容易形成这样的DOM结构；而双飞翼布局在实现上由于不需要使用定位，所以更加简洁，且允许的页面最小宽度通常比圣杯布局更小。</p>
+<p>当然三栏布局最简单的就是使用flex，我相信大家都会我就不说了hh。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/blog/article/mvvm原理/" data-toggle="tooltip" data-placement="top" title="mvvm原理">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/blog/article/offsetWidth、clientWidth和scrollWidth/" data-toggle="tooltip" data-placement="top" title="offsetWidth、clientWidth和scrollWidth">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#布局"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x5E03;&#x5C40;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#在开发中常常用到三列布局我简单来说一下我自己的一些运用和理解"><span class="toc-nav-number">1.0.0.1.</span> <span class="toc-nav-text">&#x5728;&#x5F00;&#x53D1;&#x4E2D;&#x5E38;&#x5E38;&#x7528;&#x5230;&#x4E09;&#x5217;&#x5E03;&#x5C40;&#xFF0C;&#x6211;&#x7B80;&#x5355;&#x6765;&#x8BF4;&#x4E00;&#x4E0B;&#x6211;&#x81EA;&#x5DF1;&#x7684;&#x4E00;&#x4E9B;&#x8FD0;&#x7528;&#x548C;&#x7406;&#x89E3;</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#三列布局"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x4E09;&#x5217;&#x5E03;&#x5C40;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#圣杯布局"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">&#x5723;&#x676F;&#x5E03;&#x5C40;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#dom结构"><span class="toc-nav-number">1.1.1.1.</span> <span class="toc-nav-text">DOM&#x7ED3;&#x6784;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#css代码"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">css&#x4EE3;&#x7801;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#双飞翼"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">&#x53CC;&#x98DE;&#x7FFC;</span></a></li></ol></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/blog/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/blog/tags/#css" title="css">css</a>
+                        
+                          <a class="tag" href="/blog/tags/#html" title="html">html</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://zuoning327.com" target="_blank">左宁の博客</a></li>
+                    
+                        <li><a href="http://www.decadefarewell.top" target="_blank">浪子回头</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/blog/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/276378532">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 徐翔 2020 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="">徐翔</a>
+                    <!-- <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huweihuang&repo=hexo-theme-huweihuang&type=star&count=true" >
+                    </iframe> -->
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/blog/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/blog/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/blog/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("git@github.com:276378532/blog.git/blog/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/blog/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/blog/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="git@github.com:276378532/blog.git/blog/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

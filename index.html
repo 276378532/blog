@@ -134,13 +134,6 @@
 
                         
                         <li>
-                            <a href="/blog/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/blog/about/">About</a>
                         </li>
                         
@@ -149,6 +142,13 @@
                         
                         <li>
                             <a href="/blog/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/blog/archive/">Archives</a>
                         </li>
                         
                     
@@ -253,6 +253,42 @@
 
 <div class="post-preview">
 
+    <a href="/blog/article/swiper踩过的坑/">
+        <h2 class="post-title">
+                                 
+            swiper踩过的坑
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            swiper
+swiper是一个轻巧的滚动插件，可以用来做轮播图和滚动效果
+前端时间在开发公司这个专题的时候用到了这个插件，需要实现一个左右滚动，点开放大左右滚动的效果。
+如下图：
+
+
+才其中我用到了两个swiper，这个时候踩到了第一个坑，id重复了引起错误，如果有多个swiper，一定得注意id的不同，也可以设置不同的class，保证其唯一性就好
+还有得注意初始化数据的时机很重要，避免先......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 徐翔 on
+            2019-11-06
+        </p>
+        <div class="tags">
+            
+              <a href="/blog/tags/#踩坑" title="踩坑">踩坑</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/blog/article/js运行机制/">
         <h2 class="post-title">
                                  
@@ -315,6 +351,52 @@ Object.defineProperty()说实......
         <div class="tags">
             
               <a href="/blog/tags/#vue" title="vue">vue</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/article/布局/">
+        <h2 class="post-title">
+                                 
+            布局
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            布局
+在开发中常常用到三列布局，我简单来说一下我自己的一些运用和理解
+三列布局
+
+两侧宽度固定，中间宽度自适应的三栏布局。
+可以用float,flex来实现,我具体说一下float实现的
+包括圣杯布局和双飞翼布局
+
+圣杯布局
+
+两侧宽度固定，中间宽度自适应
+中间部分在DOM结构上优先，以便先行渲染
+允许三列中的任意一列成为最高列
+只需要使用一个额外的&lt; div &gt;标签
+
+DOM结......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 徐翔 on
+            2019-05-18
+        </p>
+        <div class="tags">
+            
+              <a href="/blog/tags/#css" title="css">css</a>
+            
+              <a href="/blog/tags/#html" title="html">html</a>
             
         </div>
     
@@ -515,89 +597,16 @@ css-......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/blog/article/原型/">
-        <h2 class="post-title">
-                                 
-            原型
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            原型
-
-先看下面的图
-
-
-
-每个函数都有 prototype 属性，除了 Function.prototype.bind()，该属性指向原型。
-
-
-每个对象都有 __proto__ 属性，指向了创建该对象的构造函数的原型。其实这个属性指向了 [[prototype]]，但是 [[prototype]] 是内部属性，我们并不能访问到，所以使用__proto__ 来访问。
-
-
-对象可以通过 __......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 徐翔 on
-            2019-03-10
-        </p>
-        <div class="tags">
-            
-              <a href="/blog/tags/#js" title="js">js</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/blog/article/js数据类型/">
-        <h2 class="post-title">
-                                 
-            js数据类型
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            内置类型
-
-JS 中分为七种内置类型，七种内置类型又分为两大类型：基本类型和对象（Object）。
-基本类型有六种： null，undefined，boolean，number，string，symbol。
-
-其中 JS 的数字类型是浮点类型的，没有整型。并且浮点类型基于 IEEE 754标准实现，在使用中会遇到某些 Bug。NaN 也属于 number 类型，并且 NaN 不等于自身。
-
-......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 徐翔 on
-            2019-03-03
-        </p>
-        <div class="tags">
-            
-              <a href="/blog/tags/#js" title="js">js</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
 
 <ul class="pager">
     
+    
+        <li class="next">
+            <a href="/blog/page/2/">Older Posts &rarr;</a>
+        </li>
     
 </ul>
 
@@ -629,15 +638,23 @@ JS 中分为七种内置类型，七种内置类型又分为两大类型：基�
     <div class="tags">
         
             
-            <a href="/blog/tags/#你不知道的js" title="你不知道的js" rel="2">你不知道的js</a>
-            
-        
-            
-            <a href="/blog/tags/#css" title="css" rel="3">css</a>
+            <a href="/blog/tags/#css" title="css" rel="4">css</a>
             
         
             
             <a href="/blog/tags/#js" title="js" rel="4">js</a>
+            
+        
+            
+            <a href="/blog/tags/#你不知道的js" title="你不知道的js" rel="2">你不知道的js</a>
+            
+        
+            
+            <a href="/blog/tags/#踩坑" title="踩坑" rel="1">踩坑</a>
+            
+        
+            
+            <a href="/blog/tags/#html" title="html" rel="1">html</a>
             
         
             
@@ -701,6 +718,10 @@ JS 中分为七种内置类型，七种内置类型又分为两大类型：基�
     <ul>
       
         <li>
+          <a href="/blog/article/swiper踩过的坑/">swiper踩过的坑</a>
+        </li>
+      
+        <li>
           <a href="/blog/article/js运行机制/">js的执行机制</a>
         </li>
       
@@ -709,15 +730,11 @@ JS 中分为七种内置类型，七种内置类型又分为两大类型：基�
         </li>
       
         <li>
+          <a href="/blog/article/布局/">布局</a>
+        </li>
+      
+        <li>
           <a href="/blog/article/offsetWidth、clientWidth和scrollWidth/">offsetWidth、clientWidth和scrollWidth</a>
-        </li>
-      
-        <li>
-          <a href="/blog/article/div水平垂直居中/">div水平垂直居中</a>
-        </li>
-      
-        <li>
-          <a href="/blog/article/浅谈BFC/">浅谈BFC</a>
         </li>
       
     </ul>
@@ -742,7 +759,7 @@ JS 中分为七种内置类型，七种内置类型又分为两大类型：基�
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/03/">March 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/05/">May 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/03/">March 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li></ul>
     </div>
 
         <hr>
