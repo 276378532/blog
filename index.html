@@ -141,14 +141,14 @@
 
                         
                         <li>
-                            <a href="/blog/tags/">Tags</a>
+                            <a href="/blog/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/blog/archive/">Archives</a>
+                            <a href="/blog/tags/">Tags</a>
                         </li>
                         
                     
@@ -244,6 +244,74 @@
         <div class="tags">
             
               <a href="/blog/tags/#随记" title="随记">随记</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/article/强缓存和协商缓存/">
+        <h2 class="post-title">
+                                 
+            HTTP缓存
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            
+什么是HTTP缓存
+HTTP 缓存可以说是HTTP性能优化中简单高效的一种优化方式了，缓存是一种保存资源副本并在下次请求时直接使用该副本的技术，当 web 缓存发现请求的资源已经被存储，它会拦截请求，返回该资源的拷贝，而不会去源服务器重新下载。
+一个优秀的缓存策略可以缩短网页请求资源的距离，减少延迟，节省网络流量，并且由于缓存文件可以重复利用，降低网络负荷，提高客户端响应。
+所以，学会利用......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 徐翔 on
+            2020-03-02
+        </p>
+        <div class="tags">
+            
+              <a href="/blog/tags/#网络" title="网络">网络</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/article/吃透this/">
+        <h2 class="post-title">
+                                 
+            吃透this
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            
+吃透this
+
+this关键字是JavaScript中最复杂的机制之一，是一个特别的关键字，被自动定义在所有函数的作用域中，但是相信很多JvaScript开发者并不是非常清楚它究竟指向的是什么。听说你很懂this,是真的吗？
+
+看这个例题，看懂了请关闭这篇文章，不然就接着往下瞧，嘿嘿
+123456789101112131415161718192021var number = 5;var o......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 徐翔 on
+            2020-03-01
+        </p>
+        <div class="tags">
+            
+              <a href="/blog/tags/#你不知道的js" title="你不知道的js">你不知道的js</a>
             
         </div>
     
@@ -530,73 +598,6 @@ css-......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/blog/article/call、apply、bind的区别/">
-        <h2 class="post-title">
-                                 
-            call、apply、bind的区别
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            作用
-
-首先问个问题，这三个函数的存在意义是什么？答案是改变函数执行时的上下文，再具体一点就是改变函数运行时的this指向。有了这个认识，接下来我们来看一下,怎么使用这三个函数。
-
-举个栗子
-1234567891011function Person(name)&#123;  this.name = name;  &#125;Person.prototype = &#123;  constru......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 徐翔 on
-            2019-03-17
-        </p>
-        <div class="tags">
-            
-              <a href="/blog/tags/#你不知道的js" title="你不知道的js">你不知道的js</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/blog/article/防抖和节流/">
-        <h2 class="post-title">
-                                 
-            防抖和节流
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            函数防抖(debounce)
-
-在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。
-
-12345678910//模拟一段ajax请求function ajax(content) &#123;  console.log('ajax request ' + content)&#125;let inputa = document.getElementById('unDebounce......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 徐翔 on
-            2019-03-16
-        </p>
-        <div class="tags">
-            
-              <a href="/blog/tags/#你不知道的js" title="你不知道的js">你不知道的js</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -638,6 +639,10 @@ css-......
     <div class="tags">
         
             
+            <a href="/blog/tags/#你不知道的js" title="你不知道的js" rel="3">你不知道的js</a>
+            
+        
+            
             <a href="/blog/tags/#css" title="css" rel="4">css</a>
             
         
@@ -646,15 +651,15 @@ css-......
             
         
             
-            <a href="/blog/tags/#你不知道的js" title="你不知道的js" rel="2">你不知道的js</a>
-            
-        
-            
             <a href="/blog/tags/#踩坑" title="踩坑" rel="1">踩坑</a>
             
         
             
             <a href="/blog/tags/#html" title="html" rel="1">html</a>
+            
+        
+            
+            <a href="/blog/tags/#网络" title="网络" rel="1">网络</a>
             
         
             
@@ -718,6 +723,14 @@ css-......
     <ul>
       
         <li>
+          <a href="/blog/article/强缓存和协商缓存/">HTTP缓存</a>
+        </li>
+      
+        <li>
+          <a href="/blog/article/吃透this/">吃透this</a>
+        </li>
+      
+        <li>
           <a href="/blog/article/swiper踩过的坑/">swiper踩过的坑</a>
         </li>
       
@@ -727,14 +740,6 @@ css-......
       
         <li>
           <a href="/blog/article/mvvm原理/">mvvm原理</a>
-        </li>
-      
-        <li>
-          <a href="/blog/article/布局/">布局</a>
-        </li>
-      
-        <li>
-          <a href="/blog/article/offsetWidth、clientWidth和scrollWidth/">offsetWidth、clientWidth和scrollWidth</a>
         </li>
       
     </ul>
@@ -759,7 +764,7 @@ css-......
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/05/">May 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/03/">March 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/10/">October 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/05/">May 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/03/">March 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li></ul>
     </div>
 
         <hr>

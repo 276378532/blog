@@ -9,13 +9,6 @@
     </url>
 
     <url>
-        <loc>git@github.com:276378532/blog.git/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84js/</loc>
-        <lastmod>2019-09-06T01:51:32.432Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>git@github.com:276378532/blog.git/tags/vue/</loc>
         <lastmod>2019-09-08T13:02:27.856Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -45,7 +38,21 @@
 
     <url>
         <loc>git@github.com:276378532/blog.git/tags/%E8%B8%A9%E5%9D%91/</loc>
-        <lastmod>2020-02-18T08:18:10.482Z</lastmod>
+        <lastmod>2020-02-18T15:18:37.962Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>git@github.com:276378532/blog.git/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84js/</loc>
+        <lastmod>2020-03-04T13:13:27.144Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>git@github.com:276378532/blog.git/tags/%E7%BD%91%E7%BB%9C/</loc>
+        <lastmod>2020-03-04T14:14:42.144Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

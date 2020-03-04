@@ -7,8 +7,24 @@
     </url>
 
     <url>
+        <loc>git@github.com:276378532/blog.git/article/%E5%BC%BA%E7%BC%93%E5%AD%98%E5%92%8C%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98/</loc>
+        <lastmod>2020-03-04T14:14:42.144Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>git@github.com:276378532/blog.git/article/%E5%90%83%E9%80%8Fthis/</loc>
+        <lastmod>2020-03-04T13:13:27.144Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>git@github.com:276378532/blog.git/article/swiper%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91/</loc>
-        <lastmod>2020-02-18T08:18:10.482Z</lastmod>
+        <lastmod>2020-02-18T15:18:37.962Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
