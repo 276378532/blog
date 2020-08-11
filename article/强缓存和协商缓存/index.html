@@ -149,14 +149,14 @@
 
                         
                         <li>
-                            <a href="/blog/archive/">Archives</a>
+                            <a href="/blog/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/blog/tags/">Tags</a>
+                            <a href="/blog/archive/">Archives</a>
                         </li>
                         
                     
@@ -238,7 +238,7 @@
 <h5 id="expires">Expires：</h5>
 <ul>
 <li>Expires是HTTP1.0的产物了，现在默认浏览器均默认使用HTTP 1.1，所以它的作用基本忽略。但是很多网站还是对它做了兼容。它的值为服务端返回的到期时间，即下一次请求时，请求时间小于服务端返回的到期时间，直接使用缓存数据。</li>
-<li>但有一个问题是到期时间是由服务端生成的，如果客户端时间跟服务器时间不一致，这就会导致缓存命中的误差。而且在本地打开文件就会导致缓存失效。</li>
+<li>但有一个问题是到期时间是由服务端生成的，如果客户端时间跟服务器时间不一致，这就会导致缓存命中的误差。</li>
 </ul>
 <p>在HTTP 1.1 的版本，Expires被Cache-Control替代。</p>
 <h5 id="cache-control">Cache-Control：</h5>
@@ -292,14 +292,19 @@
 <li>协商缓存的HTTP相关头部Last-Modified / If-Modified-Since， Etag / If-None-Match (优先级比Last-Modified / If-Modified-Since高)，每次请求需要让服务器判断一下资源是否更新过，从而决定浏览器是否使用缓存，如果是，则返回304，否则重新完整响应。</li>
 </ul>
 <h5 id="技巧">技巧</h5>
-<p>对于需要频繁更新的文件可以使用 强缓存为Cache-Control为	no-cache 配合etag协商缓存每次和服务器交互拿到最新的文件或者读缓存</p>
-<p>对于一般不改动的文件 强缓存为Cache-Control:max-age=31536000 配合etag协商缓存</p>
+<p>对于某些不需要缓存的资源，可以使用 Cache-control: no-store ，表示该资源不需要缓存<br>
+对于频繁变动的资源，可以使用 Cache-Control: no-cache 并配合 ETag 使用，表示该资源已被缓存，但是每次都会发送请求询问资源是否更新。<br>
+对于代码文件来说，通常使用 Cache-Control: max-age=31536000 并配合策略缓存使用，然后对文件进行指纹处理，一旦文件名变动就会立刻下载新的文件。</p>
 
                 
 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/blog/article/浅谈cookie/" data-toggle="tooltip" data-placement="top" title="浅谈BFC">&larr; Previous Post</a>
+                        </li>
                     
                     
                         <li class="next">

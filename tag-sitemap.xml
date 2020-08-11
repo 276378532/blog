@@ -30,13 +30,6 @@
     </url>
 
     <url>
-        <loc>git@github.com:276378532/blog.git/tags/html/</loc>
-        <lastmod>2020-02-18T07:14:24.614Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>git@github.com:276378532/blog.git/tags/%E8%B8%A9%E5%9D%91/</loc>
         <lastmod>2020-02-18T15:18:37.962Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -51,8 +44,15 @@
     </url>
 
     <url>
+        <loc>git@github.com:276378532/blog.git/tags/html/</loc>
+        <lastmod>2020-08-11T04:26:09.750Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>git@github.com:276378532/blog.git/tags/%E7%BD%91%E7%BB%9C/</loc>
-        <lastmod>2020-03-04T14:14:42.144Z</lastmod>
+        <lastmod>2020-08-11T04:26:09.750Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

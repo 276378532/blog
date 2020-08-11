@@ -7,8 +7,16 @@
     </url>
 
     <url>
+        <loc>git@github.com:276378532/blog.git/article/%E6%B5%85%E8%B0%88cookie/</loc>
+        <lastmod>2020-08-11T04:26:09.750Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>git@github.com:276378532/blog.git/article/%E5%BC%BA%E7%BC%93%E5%AD%98%E5%92%8C%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98/</loc>
-        <lastmod>2020-03-04T14:14:42.144Z</lastmod>
+        <lastmod>2020-03-05T11:36:55.521Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
